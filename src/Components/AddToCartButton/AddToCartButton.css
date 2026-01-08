@@ -1,0 +1,15 @@
+.button {
+    border-radius: 10px;
+    border: none;
+    background-color: darkorange;
+    color: white;
+    padding: 10px 10px;
+    display: flex;
+    justify-content: center;
+    transition: transform 0.3s ease-in-out;
+    margin-top: auto;
+}
+
+.button:hover {
+    transform: scale(1.1);
+}

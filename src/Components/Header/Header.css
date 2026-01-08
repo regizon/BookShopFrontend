@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #e6f2f5;
+    height: 40px;
+    padding: 25px 30px;
+    font-family: Montserrat, sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.logo_text {
+    font-weight: bold;
+    font-size: 30px;
+}
+
+
+.black_text {
+    color: black;
+}
+
+.blue_text {
+    color: #0893cf;
+}
+
+.search_container {
+    max-width: 800px;
+    width: 100%;
+
+}
+
+.search_container input {
+    border-style: solid;
+    border-radius: 25px;
+    border-color: #74cafc;
+    height: 40px;
+    padding: 0 48px 0 16px;
+    font-size: 16px;
+    box-sizing: border-box;
+    width: 100%;
+    background-image: url('/src/assets/find.png');
+    background-size: 36px 36px;
+    background-repeat: no-repeat;
+    background-position: right center;
+
+}
+
+.header_left,
+.header_right {
+  display: flex;
+  min-width: 200px;
+  align-items: center;
+}
+
+.header_left {
+    margin-right: auto;
+}
+.header_right {
+    margin-left: auto;
+}
+
+.header_center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.header_left img {
+    width: 60px;
+    height: 60px;
+}
+
+.header_right img {
+    width: 30px;
+    height: 30px;
+}
+
+.header_right {
+    align-items: center;
+    display: flex;
+    gap: 20px;
+
+}

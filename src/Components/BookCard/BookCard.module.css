@@ -8,6 +8,10 @@
     width: 180px;
 }
 
+.card_container a {
+    width: 180px;
+    text-decoration: none;
+}
 
 .image_wrapper {
     border-radius: 10px;
@@ -28,15 +32,16 @@
     font-weight: bold;
     font-size: 15px;
     text-overflow: ellipsis;
-    width: 180px;
     white-space: nowrap;
     overflow: hidden;
+    color: black;
 }
 
 .author_name {
     font-size: 12px;
     font-weight: 250;
 }
+
 
 .price {
     color: darkred;

@@ -1,29 +1,33 @@
-import "./Header.css"
+import styles from "./Header.module.css"
 import logo from '/src/assets/logo.png'
 import heart from '/src/assets/heart.png'
 import profile from '/src/assets/profile.png'
 import cart from '/src/assets/shopping-cart.png'
+import {Link} from "react-router";
+import {useModal} from "../../Contexts/ModalContext.ts";
 
 function Header() {
+
+    const {openModal} = useModal();
+
     return (
       <header>
-          <div className={"header_left"}>
+          <div className={styles.headerLeft}>
               <img src={logo}/>
-              <span className={"logo_text"}>
-                  <span className={"black_text"}>BOOK</span>
-                  <span className={"blue_text"}>HEAVEN</span>
-              </span>
+              <Link to={"/"} className={styles.logoText}>
+                  <span className={styles.blackText}>BOOK</span>
+                  <span className={styles.blueText}>HEAVEN</span>
+              </Link>
           </div>
 
-          <div className={"search_container header_center"}>
+          <div className={`${styles.searchContainer} ${styles.headerCenter}`}>
               <input placeholder={"Пошук книг, авторів, жанрів..."}/>
           </div>
 
-          <div className={"header_right"}>
-              <img src={profile} alt="user_profile" />
+          <div className={styles.headerRight}>
+              <img className={styles.clickableIcon} src={profile} alt="user_profile" onClick={() => {openModal('login')}}/>
               <img src={heart} alt="favorites"/>
-              <img src={cart} alt="cart"/>
-
+              <img className={styles.clickableIcon} src={cart} alt="cart" onClick={() => {openModal('cart')}}/>
           </div>
       </header>
     );

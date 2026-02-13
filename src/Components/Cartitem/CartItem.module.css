@@ -84,7 +84,7 @@
     height: 40px;
 }
 
-.bottom-row {
+.bottomRow {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -139,7 +139,7 @@
     margin: 0;
 }
 
-.delete_button {
+.deleteButton {
     display: flex;
     background: none;
     border: none;

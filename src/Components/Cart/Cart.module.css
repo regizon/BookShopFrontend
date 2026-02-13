@@ -2,51 +2,53 @@
     font-family: Montserrat, sans-serif;
 }
 
-.cart_modal {
+a {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+.cartModal {
     border-radius: 10px;
     border: 2px solid;
-    position: fixed;
     padding: 10px;
-    top: 35%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1000;
-    width: 80%;
     min-width: 300px;
     max-width: 700px;
 
 }
 
-.modal_header img {
+.modalHeader img {
     width: 15px;
-    height: 15px;}
+    height: 15px;
+}
 
-.modal_header {
+.modalHeader {
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid #DCDCDC;
     padding: 10px;
 }
 
-.close_icon:hover {
+.closeIcon:hover {
     cursor: pointer;
 }
 
-.modal_footer {
+.modalFooter {
     display: flex;
     gap: 10px;
     margin-top: 20px;
     padding: 15px;
 }
 
-.right_block {
+.rightBlock {
     display: flex;
     gap: 10px;
     flex-direction: column;
     margin-right: 0;
+    margin-left: auto;
 }
 
-.right_block button {
+.rightBlock button {
     border: none;
     border-radius: 8px;
     font-size: 18px;
@@ -58,26 +60,26 @@
     cursor: pointer;
 }
 
-.right_block_header {
+.rightBlockHeader {
     display: flex;
     gap: 10px;
 }
 
-.cart_price {
+.cartPrice {
     margin-left: auto;
     font-weight: 600;
     font-size: 20px;
 }
 
-.left_block {
+.leftBlock {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
 }
 
 
-.left_block button {
-    width: 50%;
+.leftBlock button {
+    width: 100%;
     height: 50%;
     border: none;
     border-radius: 8px;

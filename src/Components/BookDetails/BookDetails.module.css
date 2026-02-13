@@ -9,20 +9,20 @@
     font-family: Montserrat, sans-serif;
 }
 
-.book_cover img {
+.bookCover img {
     border-radius: 8px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     min-width: 250px;
 }
 
-.book_info {
+.bookInfo {
     display: flex;
     flex-direction: column;
     gap: 10px;
     flex: 1;
 }
 
-.book_info h2 {
+.bookInfo h2 {
     font-size: 35px;
     text-transform: uppercase;
     line-height: 1.1;
@@ -30,13 +30,13 @@
     letter-spacing: -0.02em;
 }
 
-.book_author {
+.bookAuthor {
     display: block;
     color: #0279ba;
     font-weight: 600;
 }
 
-.buy_item {
+.buyItem {
     width: 280px;
     min-width: 240px;
     padding: 30px;
@@ -49,24 +49,24 @@
     gap: 10px;
 }
 
-.left_block {
+.leftBlock {
     display: flex;
     gap: 40px;
     flex-grow: 1;
 }
 
-.hidden_description {
+.hiddenDescription {
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
-.full_description {
+.fullDescription {
     max-height: 300px;
 }
 
-.show_more {
+.showMore {
     text-decoration: none;
     border: none;
     background: none;
@@ -78,11 +78,11 @@
     text-align: left;
 }
 
-.show_more:hover {
+.showMore:hover {
     text-decoration: underline;
 }
 
-.table_title {
+.tableTitle {
     font-weight: 500;
     margin-top: 10px;
 }
@@ -96,7 +96,7 @@ td {
     border-bottom: 1px solid  #e6e6e6;
 }
 
-.right_td {
+.rightTd {
     text-align: right;
 }
 

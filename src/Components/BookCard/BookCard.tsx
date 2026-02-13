@@ -1,13 +1,8 @@
-import "./BookCard.css"
+import styles from "./BookCard.module.css"
 import AddToCartButton from "../AddToCartButton/AddToCartButton.tsx";
+import type {Book} from "../../models/book.ts";
+import { Link } from "react-router";
 
-interface Book {
-    id: number;
-    cover: string;
-    title: string;
-    author: string;
-    price: number;
-}
 
 interface BookCardProps {
     book: Book;
@@ -15,14 +10,14 @@ interface BookCardProps {
 
 function BookCard({ book }:BookCardProps) {
     return (
-        <div className={"card_container"}>
-            <div className={"image_wrapper"}>
+        <div className={styles.cardContainer}>
+            <div className={styles.imageWrapper}>
                 <img src={book.cover}/>
             </div>
-            <span className={"book_title"}>{book.title}</span>
-            <span className={"author_name"}>{book.author}</span>
-            <span className={"price"}>{book.price} ₴</span>
-            <AddToCartButton/>
+            <Link to= {`/books/${book.id}`} className={styles.bookTitle}>{book.title}</Link>
+            <span className={styles.authorName}>{book.author_read}</span>
+            <span className={styles.price}>{book.price} ₴</span>
+            <AddToCartButton bookId={book.id}/>
         </div>
     )
 }

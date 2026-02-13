@@ -17,28 +17,28 @@ header {
 }
 
 
-.logo_text {
+.logoText {
     font-weight: bold;
     font-size: 30px;
     text-decoration: none;
 }
 
 
-.black_text {
+.blackText {
     color: black;
 }
 
-.blue_text {
+.blueText {
     color: #0893cf;
 }
 
-.search_container {
+.searchContainer {
     max-width: 800px;
     width: 100%;
 
 }
 
-.search_container input {
+.searchContainer input {
     border-style: solid;
     border-radius: 25px;
     border-color: #74cafc;
@@ -54,43 +54,43 @@ header {
 
 }
 
-.header_left,
-.header_right {
+.headerLeft,
+.headerRight {
   display: flex;
   min-width: 200px;
   align-items: center;
 }
 
-.header_left {
+.headerLeft {
     margin-right: auto;
 }
-.header_right {
+.headerRight {
     margin-left: auto;
 }
 
-.header_center {
+.headerCenter {
     flex: 1;
     display: flex;
     justify-content: center;
 }
 
-.header_left img {
+.headerLeft img {
     width: 60px;
     height: 60px;
 }
 
-.header_right img {
+.headerRight img {
     width: 30px;
     height: 30px;
 }
 
-.header_right {
+.headerRight {
     align-items: center;
     display: flex;
     gap: 20px;
 
 }
 
-.cart_icon:hover {
+.clickableIcon:hover  {
     cursor: pointer;
 }

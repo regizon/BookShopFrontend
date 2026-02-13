@@ -1,18 +1,12 @@
 * {
-    font-family: Inter;
+    font-family: Inter, sans-serif;
     box-sizing: border-box
 }
 
-.auth_modal {
+.authModal {
     border-radius: 10px;
     border: 1px solid;
-    position: fixed;
     padding: 40px;
-    top: 35%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1000;
-    width: 50%;
     min-width: 200px;
     max-width: 500px;
     display: flex;
@@ -20,17 +14,18 @@
     gap: 20px;
 }
 
-.auth_content {
+.authContent {
     display: flex;
     flex-direction: column;
     gap: 30px;
     align-items: center;
 }
 
-.auth_content span {
+.authContent span {
     font-size: 18px;
+
 }
-.auth_content input {
+.authContent input {
     border: 1px solid  #cccccc;
     border-radius: 5px;
     font-size: 20px;
@@ -38,7 +33,7 @@
     width: 80%;
 }
 
-.auth_content button {
+.authContent button {
     border: none;
     border-radius: 7px;
     width: 80%;
@@ -51,8 +46,23 @@
 }
 
 
-.modal_header {
+.modalHeader {
     display: flex;
     justify-content: center;
 }
 
+.registrationLink {
+    text-decoration: none;
+    color: #0056b3;
+    margin-left: 2px;
+}
+
+.registrationLink:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.error {
+    color: red;
+    font-size: 10px;
+}

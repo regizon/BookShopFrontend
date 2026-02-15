@@ -6,6 +6,7 @@ interface AuthContextType {
     handlePendingRoot: (root: string) => void;
     login: (access: string, refresh: string) => void;
     logout: () => void;
+    refreshAccessToken: () => void;
 }
 
 export const AuthContext = createContext<AuthContextType | null>(null);

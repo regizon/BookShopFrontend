@@ -52,7 +52,6 @@ function sendRegisterCode(email: string, native_name: string) {
 
 
 function verifyCode(email: string, code: string, native_name?: string | null): Promise<AuthResponse> {
-    console.log("native name in function = ", native_name)
     const payload: any = {
         email: email,
         code: code,
@@ -83,5 +82,34 @@ function verifyCode(email: string, code: string, native_name?: string | null): P
     )
 }
 
+async function obtainNewAccessCode(){
+    const refreshToken = localStorage.getItem("refreshToken")
+    return (
+        instance({
+            url: '/user/api/token/refresh',
+            method: 'post',
+            data: {"refresh" : refreshToken},
+        }).then((response) => {
+            if (response.status === 200) {
+                const data = response['data']
+                const accessToken = data['accessToken']
+                localStorage.setItem("accessToken", accessToken)
+                return accessToken
+            }}).catch(function(error){
+                if (error.response.status == 401) {
+                    throw Error(error.response.data.message)
+                } else if (error.request){
+                    throw Error(error.request);
+                } else {
+                    throw Error(error.message);
+                }
+        })
+    )
+}
 
-export {sendRegisterCode, sendLoginCode, verifyCode};
+function clearAuth(){
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+}
+
+export {sendRegisterCode, sendLoginCode, verifyCode, obtainNewAccessCode, clearAuth};

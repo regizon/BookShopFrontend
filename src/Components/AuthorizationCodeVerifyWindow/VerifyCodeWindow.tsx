@@ -2,7 +2,7 @@ import {useState, type SetStateAction} from "react";
 import CommonStyles from "../AuthorizationWindow/AuthorizationWindow.module.css"
 
 interface VerifyFormProps {
-    verifyCode: (email: string, code:string, native_name: string | null) => Promise<Element | undefined>;
+    verifyCode: (email: string, code:string, native_name: string | null) => Promise<void>;
     error: string | null;
     email: string;
     native_name: string | null;

@@ -1,7 +1,7 @@
 import {useState} from 'react';
 
 import {AuthContext} from "../Contexts/AuthContext.ts";
-
+import {obtainNewAccessCode} from "../services/auth.service.ts";
 import type {ReactNode} from 'react';
 
 
@@ -34,9 +34,18 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
         setIsAuthenticated(false)
     }
 
+    async function refreshAccessToken() {
+        const refreshToken = localStorage.getItem("refreshToken");
+        if(refreshToken !== null){
+            const accessToken = await obtainNewAccessCode(refreshToken);
+            localStorage.setItem("accessToken", accessToken);
+            setIsAuthenticated(true);
+        }
+
+    }
 
     return (
-        <AuthContext.Provider value={{login, logout, isAuthenticated, handlePendingRoot, pendingRoot}}>
+        <AuthContext.Provider value={{login, logout, isAuthenticated, handlePendingRoot, pendingRoot, refreshAccessToken}}>
             {children}
         </AuthContext.Provider>
     )

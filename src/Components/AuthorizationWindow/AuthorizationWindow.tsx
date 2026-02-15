@@ -7,7 +7,7 @@ import type {AuthStatus} from "../../models/auth.ts";
 import VerifyCodeWindow from "../AuthorizationCodeVerifyWindow/VerifyCodeWindow.tsx";
 import {useModal} from "../../Contexts/ModalContext.ts";
 import RegistrationForm from "../RegistrationForm/RegistrationForm.tsx";
-import {Navigate, useNavigate} from "react-router";
+import {useNavigate} from "react-router";
 
 
 interface AuthorizatonWindowsProps {

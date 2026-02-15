@@ -14,23 +14,31 @@ function Cart(){
                 <h3>Кошик товарів</h3>
                 <img className={styles.closeIcon} src={"../src/assets/close.png"} alt="close" onClick={closeModal}/>
             </div>
-            {items.map(item => (
-                <CartItem key={item.book.id} item={item} />
-            ))}
-            <div className={styles.modalFooter}>
-                <div className={styles.leftBlock}>
-                    <button onClick={closeModal}>Продовжити покупки</button>
-                </div>
-                <div className={styles.rightBlock}>
-                    <div className={styles.rightBlockHeader}>
-                        <span>До сплати</span>
-                        <span className={styles.cartPrice}>555 ₴</span>
+            {items.length > 0 ?
+                <>
+                    {items.map(item => (
+                        <CartItem key={item.book.id} item={item} />
+                    ))}
+                    <div className={styles.modalFooter}>
+                        <div className={styles.leftBlock}>
+                            <button onClick={closeModal}>Продовжити покупки</button>
+                        </div>
+                        <div className={styles.rightBlock}>
+                            <div className={styles.rightBlockHeader}>
+                                <span>До сплати</span>
+                                <span className={styles.cartPrice}>555 ₴</span>
+                            </div>
+                            <button>
+                                <Link to={"checkout/"} onClick={closeModal}>Оформити замовлення</Link>
+                            </button>
+                        </div>
                     </div>
-                    <button>
-                        <Link to={"checkout/"} onClick={closeModal}>Оформити замовлення</Link>
-                    </button>
-                </div>
-            </div>
+                </>
+                :
+                <>
+                    <h3 className={styles.emptyCart}>Ваш кошик порожній</h3>
+                </>
+            }
         </div>
     )
 }

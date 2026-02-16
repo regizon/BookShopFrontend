@@ -1,34 +1,35 @@
 import instance from "./httpClient.ts"
 import type {AuthResponse} from "../models/auth.ts";
+import {ENDPOINTS} from "./api.constants.ts";
 
 function sendLoginCode(email: string) {
     return (
         instance({
-        url: '/user/auth/login/',
-        method: 'post',
-        data: {"email": email}
-        }).then((response) => {
-            if (response.status === 200) {
-                return response['data']
-            }}).catch(function(error){
+            url: ENDPOINTS.AUTH.LOGIN,
+            method: 'post',
+            data: {"email": email}
+            }).then((response) => {
+                if (response.status === 200) {
+                    return response['data']
+                }}).catch(function(error){
 
-                const data = error.response.data
-                if (data.message) {
-                    throw new Error(data.message)
-                } else if (data.email){
-                    const emailError = Array.isArray(data.email) ? data.email[0] : data.email;
-                    throw new Error(emailError)
-                } else {
-                    throw new Error("Отакої, щось пішло не так...");
-                }
-        })
+                    const data = error.response.data
+                    if (data.message) {
+                        throw new Error(data.message)
+                    } else if (data.email){
+                        const emailError = Array.isArray(data.email) ? data.email[0] : data.email;
+                        throw new Error(emailError)
+                    } else {
+                        throw new Error("Отакої, щось пішло не так...");
+                    }
+            })
     )
 }
 
 function sendRegisterCode(email: string, native_name: string) {
     return (
         instance({
-            url: '/user/auth/register/',
+            url: ENDPOINTS.AUTH.REGISTER,
             method: 'post',
             data: {"email": email, "native_name": native_name},
         }).then((response) => {
@@ -63,7 +64,7 @@ function verifyCode(email: string, code: string, native_name?: string | null): P
 
     return (
         instance({
-            url: '/user/auth/verify/',
+            url: ENDPOINTS.AUTH.VERIFY,
             method: 'post',
             data: payload
             //data: {"email": email, "code": code, ...(native_name && { native_name })}
@@ -86,7 +87,7 @@ async function obtainNewAccessCode(){
     const refreshToken = localStorage.getItem("refreshToken")
     return (
         instance({
-            url: '/user/api/token/refresh',
+            url: ENDPOINTS.AUTH.REFRESH,
             method: 'post',
             data: {"refresh" : refreshToken},
         }).then((response) => {

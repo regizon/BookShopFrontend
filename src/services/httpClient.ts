@@ -1,17 +1,15 @@
-import axios, {AxiosError, type InternalAxiosRequestConfig, isAxiosError} from 'axios';
+import axios, {type InternalAxiosRequestConfig, isAxiosError} from 'axios';
 import {obtainNewAccessCode, clearAuth} from "./auth.service.ts";
+import type {RefreshItem} from "../models/auth.ts";
+import {API_CONFIG} from "./api.constants.ts";
 
-interface RefreshItem {
-    resolve: (token: string) => void;
-    reject: (error: AxiosError) => void;
-}
 
 let isRefreshing = false;
 let refreshQueue: RefreshItem[] = [];
 
 const instance = axios.create({
-    baseURL: 'http://localhost:8000/',
-    timeout: 1000,
+    baseURL: API_CONFIG.BASE_URL,
+    timeout: API_CONFIG.TIMEOUT,
     withCredentials: true,
     xsrfCookieName: 'csrftoken',
     xsrfHeaderName: 'X-CSRFToken',

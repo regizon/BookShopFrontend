@@ -1,9 +1,11 @@
 import instance from "./httpClient.ts"
+import {ENDPOINTS} from "./api.constants.ts";
+
 
 function getCart() {
     return (
         instance({
-        url: '/cart/view/',
+        url: ENDPOINTS.CART.VIEW,
         method: 'get'
         }).then((response) => {
             return response['data']
@@ -14,7 +16,7 @@ function getCart() {
 function addItemToCart(bookId: number){
     return(
         instance({
-            url: '/cart/add/',
+            url: ENDPOINTS.CART.ADD,
             method: 'post',
             data: {"book": bookId}
         }).then((response) => {
@@ -27,7 +29,7 @@ function addItemToCart(bookId: number){
 function deleteFromCart(cartItemId: number){
     return(
         instance({
-            url: `/cart/delete/${cartItemId}`,
+            url: ENDPOINTS.CART.DELETE(cartItemId),
             method: 'delete',
         })
     )
@@ -36,7 +38,7 @@ function deleteFromCart(cartItemId: number){
 function removeItemFromCart(bookId: number){
     return(
         instance({
-            url: '/cart/delete/',
+            url: ENDPOINTS.CART.REMOVE,
             method: 'delete',
             data: {"book": bookId}
         })

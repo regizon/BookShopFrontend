@@ -8,12 +8,19 @@
 
 header {
     background-color: #e6f2f5;
-    height: 40px;
-    padding: 25px 30px;
+    width: 100%;
     font-family: Montserrat, sans-serif;
+}
+
+.headerInner {
+    max-width: 100%;
+    margin: 0 auto;
+    height: 80px;
+    padding: 25px 30px;
     display: flex;
     align-items: center;
     gap: 25px;
+    box-sizing: border-box;
 }
 
 

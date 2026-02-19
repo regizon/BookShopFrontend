@@ -1,0 +1,7 @@
+.content{
+    margin: 0 auto;
+    max-width: 1700px;
+    display: flex;
+    font-family: Montserrat, sans-serif;
+    padding: 25px 30px;
+}

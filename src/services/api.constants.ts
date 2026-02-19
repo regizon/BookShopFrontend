@@ -18,6 +18,6 @@ export const ENDPOINTS = {
         VIEW: '/cart/view/',
         ADD: '/cart/add/',
         DELETE: (cartItemId: number) => `/cart/delete/${cartItemId}`,
-        REMOVE: '/cart/remove/'
+        REMOVE: '/cart/delete/'
     },
 };

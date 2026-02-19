@@ -7,6 +7,10 @@ import {Link} from "react-router";
 function Cart(){
     const {items} = useCart()
     const {closeModal} = useModal()
+    console.log(items)
+    const totalPrice = items.reduce((sum, item) => {
+        return sum + item.price * item.quantity
+    }, 0);
 
     return (
         <div className={styles.cartModal}>
@@ -26,7 +30,7 @@ function Cart(){
                         <div className={styles.rightBlock}>
                             <div className={styles.rightBlockHeader}>
                                 <span>До сплати</span>
-                                <span className={styles.cartPrice}>555 ₴</span>
+                                <span className={styles.cartPrice}>{totalPrice} ₴</span>
                             </div>
                             <button>
                                 <Link to={"checkout/"} onClick={closeModal}>Оформити замовлення</Link>

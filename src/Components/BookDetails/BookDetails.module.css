@@ -40,7 +40,7 @@
     width: 280px;
     min-width: 240px;
     padding: 30px;
-    max-height: 100px;
+    align-self: flex-start;
     border: solid 1px #e6e6e6;
     border-radius: 10px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);

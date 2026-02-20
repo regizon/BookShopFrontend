@@ -1,7 +1,113 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 .content{
     margin: 0 auto;
-    max-width: 1700px;
+    max-width: 1300px;
     display: flex;
     font-family: Montserrat, sans-serif;
     padding: 25px 30px;
+    gap: 30px;
+    flex-direction: column;
+}
+
+.mainForm {
+    border-radius: 8px;
+    border: 1px solid lightgray;
+    width: 60%;
+    padding: 20px 20px 20px 20px;
+    flex-direction: column;
+    display: flex;
+    gap: 15px;
+}
+
+.inputBlock {
+    display: flex;
+    gap: clamp(24px, 5vw, 80px);
+    width: 100%;
+}
+
+.radioBlock {
+    display: flex;
+}
+
+.leftInputBlock, .rightInputBlock {
+    flex-direction: column;
+    display: flex;
+    gap: 10px;
+    flex: 1;
+}
+
+.leftRadioBlock, .rightRadioBlock {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 10px;
+}
+
+
+.mainForm input:not([type="radio"]) {
+    border-radius: 8px;
+    border: 1px solid lightgray;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.orderReview {
+    display: flex;
+    width: 35%;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #FCFAFA;
+    border-radius: 8px;
+    border: 1px solid lightgray;
+    position: sticky;
+    overflow-wrap: break-word;
+    padding: 20px 20px 20px 20px;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid lightgray;
+    width: 100%;
+    align-self: center;
+}
+
+.radioLabel {
+    display: flex;
+    gap: 10px;
+}
+
+.commentInfo {
+    color: gray;
+    font-weight: lighter;
+}
+
+.commentBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.commentBlock textarea {
+    width: 100%;
+    border: 1px solid lightgray;
+    border-radius: 8px;
+    min-height: 80px;
+    resize: none;
 }

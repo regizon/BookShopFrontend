@@ -44,10 +44,6 @@ const CartProvider = ({ children }: CartProviderProps) => {
     }
 
 
-    useEffect(() => {
-        fetchCart()
-    }, [])
-
     async function removeItem(bookId: number) {
         setIsLoading(true);
         await removeItemFromCart(bookId)
@@ -61,6 +57,11 @@ const CartProvider = ({ children }: CartProviderProps) => {
         fetchCart()
         setIsLoading(false);
     }
+
+
+    useEffect(() => {
+        fetchCart()
+    }, [])
 
     return (
         <CartContext.Provider value={{ items, fetchCart, addItem, removeItem, isLoading, deleteItemFromCart  }}>

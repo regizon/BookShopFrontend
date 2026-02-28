@@ -9,17 +9,21 @@ interface BookCardProps {
 }
 
 function BookCard({ book }:BookCardProps) {
+
+    const available = book.quantity > 0
+
     return (
-        <div className={styles.cardContainer}>
-            <div className={styles.imageWrapper}>
-                <img src={book.cover}/>
+            <div className={`${styles.cardContainer} ${!available ? styles.unavailable : ''}`}>
+                <div className={styles.imageWrapper}>
+                    <img src={book.cover}/>
+                </div>
+                <Link to= {`/books/${book.id}`} className={styles.bookTitle}>{book.title}</Link>
+                <span className={styles.authorName}>{book.author_read}</span>
+                <span className={styles.price}>{book.price} ₴</span>
+                <AddToCartButton bookId={book.id}/>
             </div>
-            <Link to= {`/books/${book.id}`} className={styles.bookTitle}>{book.title}</Link>
-            <span className={styles.authorName}>{book.author_read}</span>
-            <span className={styles.price}>{book.price} ₴</span>
-            <AddToCartButton bookId={book.id}/>
-        </div>
-    )
+        )
+
 }
 
 export default BookCard

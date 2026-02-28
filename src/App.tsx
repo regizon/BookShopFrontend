@@ -18,7 +18,6 @@ function App() {
   }, [])
 
     return (
-
       <div className={"app"}>
          <div style={{display: 'flex', gap: '20px', padding: '20px'}}>
               {books.map(item => (

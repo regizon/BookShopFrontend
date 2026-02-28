@@ -2,21 +2,26 @@ import styles from "./CheckoutPage.module.css"
 import {useCart} from "../../Contexts/CartContext.ts";
 import {type SetStateAction, useEffect, useState} from "react";
 import CartItem from "../Cartitem/CartItem.tsx";
-
+import {Navigate, useNavigate} from "react-router";
+import {createOrder} from "../../services/order.service.ts";
+import type orderDetails from "../../models/order.ts";
+import {AxiosError, AxiosHeaders} from "axios";
 
 function CheckoutPage() {
-
     type AvailableDelivery = 'self' | 'courier'
+    type AvailablePaymentMethods = 'online' | 'offline'
     const [name, setName] = useState<string>("");
     const [surname, setSurname] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [phone, setPhone] = useState<string>("");
+    const [userError, setUserError] = useState<string | null>(null);
     const [deliveryMethod, setDeliveryMethod] = useState<AvailableDelivery>("self");
+    const [paymentMethod, setPaymentMethod] = useState<AvailablePaymentMethods>("online");
+    const navigate = useNavigate()
 
     function isEmailValid(email: string){
         return !(!email.includes("@") || !email.includes("."));
     }
-
 
     const handleEmailChange = (event: { target: { value: SetStateAction<string>; }; }) => {
         setEmail(event.target.value);
@@ -34,6 +39,55 @@ function CheckoutPage() {
         setPhone(event.target.value);
     }
 
+    function handleCourierDelivery () {
+        setDeliveryMethod("courier");
+    }
+
+    function handleSelfDelivery () {
+        setDeliveryMethod("self");
+    }
+
+    function handleOnlinePayment(){
+        setPaymentMethod("online");
+    }
+
+    function handleOfflinePayment(){
+        setPaymentMethod("offline");
+    }
+
+
+    const details = {
+        "name" : name,
+        "surname" : surname,
+        // "email" : email,
+        // "phone" : phone,
+        "delivery_type": deliveryMethod,
+        "payment_method": paymentMethod
+
+    }
+
+    async function newOrder(details: orderDetails) {
+        try {
+            if (!isEmailValid(email)) {
+                setUserError("Щось не так з поштою...");
+                return;
+            }else {
+                console.log(details)
+                if(await createOrder(details)){
+                    alert("Успешно создано");
+                    navigate("/", {replace: true})
+                }
+            }
+        }catch(error:any){
+            let errorMessage = "Сталася невідома помилка";
+            if(error.response && error.response.data){
+                errorMessage = error.response.data
+            }
+            setUserError(errorMessage)
+            alert(errorMessage)
+        }
+    }
+
     const {fetchCart, items} = useCart()
 
     useEffect(() =>{
@@ -45,15 +99,12 @@ function CheckoutPage() {
     }, 0);
 
 
-    function handleCourierDelivery () {
-        setDeliveryMethod("courier");
-    }
 
-    function handleSelfDelivery () {
-        setDeliveryMethod("self");
-    }
 
-    return(
+    const Items = items.length > 0;
+
+    if (Items) {
+        return(
         <div className={styles.content}>
             <h2>Оформлення замовлення</h2>
             <div className={styles.wrapper}>
@@ -64,8 +115,7 @@ function CheckoutPage() {
                             <label htmlFor={"username"}>Ім'я</label>
                             <input id={"username"} placeholder={"Ім'я"} onChange={handleNameChange}/>
                             <label htmlFor={"phoneNumber"}>Телефон</label>
-                            <input id={"phoneNumber"} placeholder={"Номер телефону"} onChange={handlePhoneChange}
-                                   onWheel={(e) => e.currentTarget.blur()} type={"number"}/>
+                            <input id={"phoneNumber"} maxLength={10} placeholder={"Номер телефону"} onChange={handlePhoneChange} type={"tel"}/>
                         </div>
                         <div className={styles.rightInputBlock}>
                             <label htmlFor={"surname"}>Прізвище</label>
@@ -91,11 +141,11 @@ function CheckoutPage() {
                         <div className={styles.rightRadioBlock}>
                             <h3>Спосіб оплати</h3>
                             <label className={styles.radioLabel}>
-                                <input id={"online"} name={"paymentMethod"} type={"radio"}/>
+                                <input id={"online"} onChange={handleOnlinePayment} name={"paymentMethod"} type={"radio"}/>
                                 <span>Картою онлайн</span>
                             </label>
                             <label className={styles.radioLabel}>
-                                <input id={"offline"} name={"paymentMethod"} type={"radio"}/>
+                                <input id={"offline"} onChange={handleOfflinePayment} name={"paymentMethod"} type={"radio"}/>
                                 <span>При отриманні</span>
                             </label>
                         </div>
@@ -139,12 +189,19 @@ function CheckoutPage() {
                     </div>
 
                     <div className={styles.confirmOrder}>
-                        <button>ОФОРМИТИ ЗАМОВЛЕННЯ</button>
+                        <button onClick={
+                            async () =>{
+                                await newOrder(details)
+                            }
+                        }>ОФОРМИТИ ЗАМОВЛЕННЯ</button>
                     </div>
                 </div>
             </div>
         </div>
     )
+    }else {
+        return(<Navigate to={"/"} replace/>)
+    }
 }
 
 export default CheckoutPage;

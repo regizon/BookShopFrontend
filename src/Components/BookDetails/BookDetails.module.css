@@ -109,3 +109,14 @@ td {
     color: green;
     font-weight: 450;
 }
+
+.unavailableText {
+    color: red;
+    font-weight: 450;
+}
+
+.unavailable button{
+    opacity: 0.5;
+    filter: grayscale(100%);
+    pointer-events: none;
+}

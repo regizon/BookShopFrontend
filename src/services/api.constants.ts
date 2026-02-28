@@ -20,4 +20,7 @@ export const ENDPOINTS = {
         DELETE: (cartItemId: number) => `/cart/delete/${cartItemId}`,
         REMOVE: '/cart/delete/'
     },
+    ORDERS: {
+        CREATE: '/order/create/'
+    }
 };

@@ -10,7 +10,7 @@ interface BookDetailsProps {
 function BookDetails({book}: BookDetailsProps) {
 
     const [isExpanded, setIsExpanded] = useState<boolean>(false)
-    console.log(isExpanded)
+    const available = book.quantity > 0
     return (
         <div className={styles.content}>
             <div className={styles.leftBlock}>
@@ -55,9 +55,9 @@ function BookDetails({book}: BookDetailsProps) {
                     </table>
                 </div>
             </div>
-            <div className={styles.buyItem}>
+            <div className={`${styles.buyItem} ${!available ? styles.unavailable : ''}`}>
                 <span className={styles.price}>{book.price} грн</span>
-                <span className={styles.available}>В наявності</span>
+                <span className={`${styles.available} ${!available ? styles.unavailableText : ''}`}>{available ? 'В наявності' : 'Немає в наявності' }</span>
                 <AddToCartButton bookId={book.id} />
             </div>
         </div>

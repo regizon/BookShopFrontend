@@ -10,6 +10,7 @@ header {
     background-color: #e6f2f5;
     width: 100%;
     font-family: Montserrat, sans-serif;
+
 }
 
 .headerInner {
@@ -42,7 +43,7 @@ header {
 .searchContainer {
     max-width: 800px;
     width: 100%;
-
+    position: relative;
 }
 
 .searchContainer input {

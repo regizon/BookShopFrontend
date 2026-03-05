@@ -1,0 +1,28 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.header {
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid #e0e0e0;
+}

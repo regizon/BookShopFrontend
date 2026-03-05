@@ -1,0 +1,27 @@
+.itemContainer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.itemContainer:hover {
+    background: #f5f5f5;
+}
+
+.poster {
+    height: 40px;
+    width: 30px;
+    object-fit: cover;
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+.rightPart {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}

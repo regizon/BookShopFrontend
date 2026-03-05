@@ -1,7 +1,7 @@
 import './App.css'
 import { useState, useEffect } from 'react';
 import BookCard from "./Components/BookCard/BookCard.tsx";
-import getAll from "./services/book.service.ts";
+import {getAll} from "./services/book.service.ts";
 import type {Book} from "./models/book.ts";
 
 

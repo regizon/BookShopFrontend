@@ -10,6 +10,7 @@ import ModalProvider from "./Providers/ModalProvider.tsx";
 import CheckoutPage from "./Components/CheckoutPage/CheckoutPage.tsx";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute.tsx";
 import ProfilePage from "./Components/ProfilePage/ProfilePage.tsx";
+import CategoryPage from "./Components/CategoryPage/CategoryPage.tsx";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <ModalProvider>
@@ -24,6 +25,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                               <Route path={"profile/"} element={<ProfilePage />}/>
                           </Route>
                           <Route path="books/:bookId" element={<BookPage />} />
+                          <Route path="books/category/:slug" element={<CategoryPage />}/>
                       </Route>
                   </Routes>
               </BrowserRouter>

@@ -13,6 +13,8 @@ export const ENDPOINTS = {
     BOOKS: {
         LIST: '/books',
         DETAIL: (id: string | undefined) => `/books/${id}`,
+        GENRES: '/books/genres',
+        CATEGORY_LIST: (slug: string | undefined) => `/books/category/${slug}`,
     },
     CART: {
         VIEW: '/cart/view/',

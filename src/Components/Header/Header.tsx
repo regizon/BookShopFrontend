@@ -10,34 +10,48 @@ import { useNavigate } from "react-router"
 import {useBookSearch} from "../../hooks/BookSearch.ts";
 import {type SetStateAction, useEffect, useRef, useState} from "react";
 import SearchResults from "../SearchResults/SearchResults.tsx";
+import GenresMenu from "../GenresMenu/GenresMenu.tsx";
 
 function Header() {
     const {openModal} = useModal();
     const {isAuthenticated} = useAuth()
     const navigate = useNavigate();
     const [searchInput, setSearchInput] = useState("");
-    const [openMenu, setOpenMenu] = useState<boolean>();
+    const [openSearchMenu, setOpenSearchMenu] = useState<boolean>();
+    const [openGenresMenu, setOpenGenresMenu] = useState<boolean>(false);
     const foundBooks = useBookSearch(searchInput, 1000)
-    const dropdownMenu = useRef(null)
+    const dropdownSearchMenu = useRef(null)
+    const dropdownGenresMenu = useRef(null)
     const location = useLocation()
 
-    const closeMenu = (e) => {
-        if(openMenu && !dropdownMenu.current?.contains(e.target)){
-            setOpenMenu(false)
+    const closeSearchMenu = (e) => {
+        if(openSearchMenu && !dropdownSearchMenu.current?.contains(e.target)){
+            setOpenSearchMenu(false)
+        }
+    }
+
+    const closeGenresMenu = (e) => {
+        if(openGenresMenu && !dropdownGenresMenu.current?.contains(e.target)){
+            setOpenGenresMenu(false)
         }
     }
 
     useEffect(() => {
-        document.addEventListener('mousedown',closeMenu)
+        document.addEventListener('mousedown',closeSearchMenu)
 
-        return() => document.removeEventListener('mousedown',closeMenu)
+        return() => document.removeEventListener('mousedown',closeSearchMenu)
 
-    }, [openMenu])
+    }, [openSearchMenu])
 
     useEffect(() => {
         // eslint-disable-next-line react-hooks/set-state-in-effect
-        setOpenMenu(false)
+        setOpenSearchMenu(false)
     }, [location.pathname])
+
+    useEffect(() => {
+        document.addEventListener('mousedown', closeGenresMenu)
+        return() => document.removeEventListener('mousedown',closeGenresMenu)
+    }, [openGenresMenu])
 
     return (
 
@@ -49,11 +63,27 @@ function Header() {
                   <span className={styles.blackText}>BOOK</span>
                   <span className={styles.blueText}>HEAVEN</span>
               </Link>
+              <div className={styles.relativeElement} onClick={() => setOpenGenresMenu(!openGenresMenu)} ref={dropdownGenresMenu}>
+                  <div className={styles.categoryButtonContainer} >
+                      <div>Всі категорії</div>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                           stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                           className="lucide lucide-chevron-down-icon lucide-chevron-down">
+                          <path d="m6 9 6 6 6-6"/>
+                      </svg>
+                  </div>
+                  {openGenresMenu &&
+                    <GenresMenu/>
+                  }
+              </div>
           </div>
 
-          <div ref={dropdownMenu} className={`${styles.searchContainer} ${styles.headerCenter}`}>
-              <input onChange = {(event: {target: { value: SetStateAction<string>}}) => { setSearchInput(event.target.value); setOpenMenu(true) }} placeholder={"Пошук книг, авторів, жанрів..."}/>
-              {foundBooks.length > 0 && openMenu &&
+            <div ref={dropdownSearchMenu} className={`${styles.searchContainer} ${styles.headerCenter}`}>
+                <input onChange={(event: { target: { value: SetStateAction<string> } }) => {
+                    setSearchInput(event.target.value);
+                    setOpenSearchMenu(true)
+                }} placeholder={"Пошук книг, авторів, жанрів..."}/>
+              {foundBooks.length > 0 && openSearchMenu &&
                   <SearchResults bookList={foundBooks} />
               }
           </div>

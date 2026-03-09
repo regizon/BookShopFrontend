@@ -70,10 +70,8 @@ header {
 }
 
 .headerLeft {
-    margin-right: auto;
-}
-.headerRight {
-    margin-left: auto;
+    flex: 1;
+    gap: 15px;
 }
 
 .headerCenter {
@@ -96,9 +94,38 @@ header {
     align-items: center;
     display: flex;
     gap: 20px;
-
+    flex: 1;
+    justify-content: flex-end;
 }
 
 .clickableIcon:hover  {
     cursor: pointer;
+}
+
+.categoryButtonContainer {
+    display: flex;
+    position: relative;
+    background-color: #0893cf;
+    align-items: center;
+    border-radius: 7px;
+    font-size: 15px;
+    padding: 10px;
+    color: white;
+    font-family: Montserrat, sans-serif;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.2s ease;
+    gap: 15px;
+}
+
+.categoryButtonContainer:hover {
+    background-color: #0678a8;
+}
+
+.categoryButtonContainer svg{
+    margin-top: 3px;
+}
+
+.relativeElement {
+    position: relative;
 }

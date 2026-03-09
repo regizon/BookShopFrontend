@@ -26,4 +26,26 @@ function searchBook(title: string){
     )
 }
 
-export {getAll, searchBook}
+function getAllByGenre(slug: string | undefined){
+    return(
+        instance({
+            url: ENDPOINTS.BOOKS.CATEGORY_LIST(slug),
+            method: 'get'
+        }).then((response) => {
+            return response['data']
+        })
+    )
+}
+
+function getGenres(){
+    return (
+        instance({
+            url: ENDPOINTS.BOOKS.GENRES,
+            method: 'get'
+        }).then((response) => {
+            return response['data']
+        })
+    )
+}
+
+export {getAll, getGenres, searchBook, getAllByGenre}

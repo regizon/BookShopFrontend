@@ -1,8 +1,12 @@
+import styles from "./ProfilePage.module.css"
+import ProfileSettings from "../ProfileSettings/ProfileSettings.tsx"
+
 function ProfilePage() {
 
     return(
-        <div>
-            <h1>This is profile page</h1>
+        <div className={styles.content}>
+            <h2>Особистий кабінет</h2>
+            <ProfileSettings />
         </div>
     )
 }

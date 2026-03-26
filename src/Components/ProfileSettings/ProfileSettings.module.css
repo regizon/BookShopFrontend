@@ -1,0 +1,58 @@
+.settingsContainer {
+    background-color: #F7F7F7;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    border-radius: 10px;
+}
+
+.inputBlock {
+    display: flex;
+    gap: clamp(24px, 5vw, 80px);
+    width: 100%;
+}
+
+.leftInputBlock, .rightInputBlock {
+    flex-direction: column;
+    display: flex;
+    gap: 10px;
+    flex: 1;
+}
+
+.inputBlock input {
+    border-radius: 7px;
+    padding: 10px;
+    background-color: #EBEBEB;
+    border: none;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.lastOrdersContainer {
+    width: 300px;
+    border: 1px solid;
+}
+
+.editButton, .saveButton {
+    border-radius: 10px;
+    border: none;
+    width: 100%;
+    color: white;
+    padding: 10px 10px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.editButton {
+    background-color: darkorange;
+}
+
+.saveButton {
+    background-color: darkgreen;
+}

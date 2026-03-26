@@ -1,0 +1,9 @@
+.content{
+    margin: 0 auto;
+    max-width: 1300px;
+    padding: 24px;
+    display: flex;
+    gap: 55px;
+    font-family: Montserrat, sans-serif;
+    flex-direction: column;
+}

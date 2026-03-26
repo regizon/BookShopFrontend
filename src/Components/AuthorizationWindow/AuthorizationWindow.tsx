@@ -8,7 +8,7 @@ import VerifyCodeWindow from "../AuthorizationCodeVerifyWindow/VerifyCodeWindow.
 import {useModal} from "../../Contexts/ModalContext.ts";
 import RegistrationForm from "../RegistrationForm/RegistrationForm.tsx";
 import {useNavigate} from "react-router";
-
+import isEmailValid from "../../services/emailChecker.ts"
 
 interface AuthorizatonWindowsProps {
     initialStep: AuthStatus
@@ -27,11 +27,6 @@ function AuthorizationWindow({initialStep}: AuthorizatonWindowsProps){
     function startRegistration(){
         setStatus("registration")
     }
-
-    function isEmailValid(email: string){
-        return !(!email.includes("@") || !email.includes("."));
-    }
-
 
     async function requestLoginCode(email: string) {
         setUserError("")

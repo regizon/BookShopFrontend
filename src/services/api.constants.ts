@@ -24,5 +24,8 @@ export const ENDPOINTS = {
     },
     ORDERS: {
         CREATE: '/order/create/'
+    },
+    USER: {
+        PROFILE: '/user/profile'
     }
 };

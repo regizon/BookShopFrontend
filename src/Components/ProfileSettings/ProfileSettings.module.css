@@ -35,8 +35,8 @@
 }
 
 .lastOrdersContainer {
-    width: 300px;
-    border: 1px solid;
+    min-width: 500px;
+    border-radius: 10px;
 }
 
 .editButton, .saveButton {

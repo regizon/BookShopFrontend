@@ -14,6 +14,7 @@ interface AuthorizatonWindowsProps {
     initialStep: AuthStatus
 }
 
+
 function AuthorizationWindow({initialStep}: AuthorizatonWindowsProps){
     const {login, pendingRoot} = useAuth();
     const navigate = useNavigate();
@@ -53,7 +54,11 @@ function AuthorizationWindow({initialStep}: AuthorizatonWindowsProps){
             if(!isEmailValid(email)){
                 setUserError("Щось не так з поштою...")
                 return
-            }else{
+            }else if(native_name.length < 1){
+                setUserError("Мабуть ви забули вказати ім'я")
+                return
+            }
+            else{
                 await sendRegisterCode(email, native_name)
                 setStatus("verification")
                 setUserEmail(email)

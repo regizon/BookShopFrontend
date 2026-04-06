@@ -23,9 +23,11 @@ export const ENDPOINTS = {
         REMOVE: '/cart/delete/'
     },
     ORDERS: {
-        CREATE: '/order/create/'
+        CREATE: '/order/create/',
+        LIST: '/order/list/',
+        PREVIEW: '/order/recent/'
     },
     USER: {
-        PROFILE: '/user/profile'
+        PROFILE: '/user/profile/'
     }
 };

@@ -16,3 +16,10 @@ export interface BookAllInfo extends Book {
     language: string;
     isbn: number;
 }
+
+export interface BookOrderPreview {
+    author: string;
+    cover: string;
+    title: string;
+    item: Book;
+}

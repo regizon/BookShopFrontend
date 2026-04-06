@@ -1,6 +1,7 @@
 import {useState, type SetStateAction} from "react";
 import CommonStyles from "../AuthorizationWindow/AuthorizationWindow.module.css"
 import styles from "../AuthorizationWindow/AuthorizationWindow.module.css";
+import handleEnter from "../../services/handleEnter.ts";
 
 interface LoginFormProps {
     sendCode: (email: string) => Promise<void>;
@@ -22,7 +23,7 @@ function LoginForm( {sendCode, error, switchToRegistration} : LoginFormProps) {
                 <h2>Вхід на сайт</h2>
             </div>
             <span>Введіть ваш Email:</span>
-            <input type={"email"} placeholder={"Ваш Email"} onChange={handleEmailChange}/>
+            <input type={"email"} placeholder={"Ваш Email"} onChange={handleEmailChange} onKeyDown={(e) => {handleEnter(e, () => {sendCode(userEmail)})}}/>
             <span className={CommonStyles.error}>{error}</span>
             <button onClick={() => {
                 sendCode(userEmail)

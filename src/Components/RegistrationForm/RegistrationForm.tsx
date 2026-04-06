@@ -1,6 +1,7 @@
 import {useState, type SetStateAction, type JSX} from "react";
 import CommonStyles from "../AuthorizationWindow/AuthorizationWindow.module.css"
 import styles from "../AuthorizationWindow/AuthorizationWindow.module.css";
+import handleEnter from "../../services/handleEnter.ts";
 
 interface RegistrationFormProps {
     sendCode: (email: string, native_name: string) => Promise<void>;
@@ -27,9 +28,9 @@ function RegistrationForm( { error, sendCode} : RegistrationFormProps): JSX.Elem
                 <h2>Реєстрація</h2>
             </div>
             <span>Введіть ваш Email:</span>
-            <input type={"email"} placeholder={"Ваш Email"} onChange={handleEmailChange}/>
+            <input type={"email"} placeholder={"Ваш Email"} onChange={handleEmailChange} onKeyDown={(e) => handleEnter(e, () => (sendCode(userEmail, userName)))}/>
             <span>Введіть ваше ім'я:</span>
-            <input type={"text"} placeholder={"Ваше ім'я"} onChange={handleNameChange}/>
+            <input type={"text"} placeholder={"Ваше ім'я"} onChange={handleNameChange} onKeyDown={(e) => handleEnter(e, () => (sendCode(userEmail, userName)))}/>
             <span className={CommonStyles.error}>{error}</span>
             <button onClick={() => {sendCode(userEmail, userName)}}>Зареєструватися
             </button>

@@ -1,24 +1,26 @@
-import styles from "./RecentOrders.module.css"
 import {useEffect, useState} from "react";
 import type {OrderPreviewType} from "../../models/order.ts";
-import {getOrdersPreview} from "../../services/order.service.ts";
+import {ordersList} from "../../services/order.service.ts";
+import styles from "./OrdersPage.module.css";
 import OrderCard from "../OrderCard/OrderCard.tsx";
-function RecentOrders(){
+
+function OrdersPage() {
+
     const [lastOrders, setLastOrders] = useState<OrderPreviewType[]>([]);
 
     useEffect(() => {
         async function fetchOrders() {
-            setLastOrders(await getOrdersPreview())
+            setLastOrders(await ordersList())
         }
         fetchOrders()
     }, [])
 
     return(
         <div className={styles.content}>
+            <span className={styles.caption}>Історія замовлень</span>
             <table>
-                <caption className={styles.head}>Останні замовлення</caption>
                 <thead>
-                <tr>
+                <tr className={styles.firstRow}>
                     <th>№ Замовлення</th>
                     <th>Дата</th>
                     <th>Товари</th>
@@ -29,7 +31,7 @@ function RecentOrders(){
                 {lastOrders.length > 0 ?
                     <tbody>
                     {lastOrders.map(order => (
-                        <OrderCard item={order} expandable={false} key={order.id}/>
+                        <OrderCard item={order} expandable={true} key={order.id}/>
                     ))}
                     </tbody>
                     :
@@ -40,9 +42,8 @@ function RecentOrders(){
                     </tbody>
                 }
             </table>
-            <button>Переглянути всі замовлення</button>
         </div>
     )
 }
 
-export default RecentOrders;
+export default OrdersPage;

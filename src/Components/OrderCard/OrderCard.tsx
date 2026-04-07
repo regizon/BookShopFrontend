@@ -4,14 +4,8 @@ import type {JSX} from "react";
 
 interface OrderCardProps {
     item: OrderPreviewType;
+    expandable: boolean;
 }
-
-// interface StatusVariations {
-//     "pending": "Доставляється",
-//     "paid": "Сплачено",
-//     "shipped": "Доставлено",
-//     "cancelled": "Скасовано"
-// }
 
 const statusVariations: Record<string, JSX.Element> = {
     "pending": <span className={styles.status}><div className={`${styles.circle} ${styles.pending}`}></div>Доставляється</span>,
@@ -22,10 +16,17 @@ const statusVariations: Record<string, JSX.Element> = {
 
 export default function OrderCard(order: OrderCardProps): JSX.Element {
     const books = order.item.items
+    const django_date = order.item.order_date
+    const date = new Date(django_date).toLocaleDateString('ua-UA', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+    });
+
     return (
         <tr>
             <td>{order.item.id}</td>
-            <td>04.04.2026</td>
+            <td>{date}</td>
             <td className={styles.imageWrapper}>
                 {books.length - 1 > 0 ?
                     <div className={styles.coverWrapper}>

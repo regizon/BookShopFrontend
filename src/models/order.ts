@@ -13,6 +13,7 @@ export interface orderDetails {
 export interface OrderPreviewType {
     id: number;
     items: BookOrderPreview[];
+    order_date: string;
     status: string;
     total_price: number;
 }

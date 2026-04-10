@@ -39,3 +39,7 @@ td img {
 .pending {
     background-color: #d19c0a;
 }
+
+.clickable:hover {
+    cursor: pointer;
+}

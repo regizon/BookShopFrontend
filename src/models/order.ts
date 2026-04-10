@@ -10,11 +10,14 @@ export interface orderDetails {
     status: string;
 }
 
-export interface OrderPreviewType {
+export interface OrderCardType extends orderDetails {
     id: number;
     items: BookOrderPreview[];
     order_date: string;
-    status: string;
+    delivery_status: string;
+    payment_status: string;
+    quantity: number;
+    price: number;
     total_price: number;
 }
 

@@ -15,7 +15,10 @@ function OrdersPage() {
         }
         fetchOrders()
     }, [])
-    const clickedId = location.state.id
+
+    const clickedId = location.state?.id
+
+
     return(
         <div className={styles.content}>
             <span className={styles.caption}>Історія замовлень</span>
@@ -32,7 +35,7 @@ function OrdersPage() {
                 {lastOrders.length > 0 ?
                     <tbody>
                     {lastOrders.map(order => (
-                        <OrderCard item={order} expandable={true} key={order.id} open={clickedId === order.id}/>
+                        <OrderCard item={order} expandable={true} key={order.id} open={clickedId !== undefined ? clickedId === order.id : false}/>
                     ))}
                     </tbody>
                     :

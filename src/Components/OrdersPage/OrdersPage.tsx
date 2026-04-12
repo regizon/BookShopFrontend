@@ -8,18 +8,29 @@ import {useLocation} from "react-router";
 function OrdersPage() {
 
     const [lastOrders, setLastOrders] = useState<OrderCardType[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
     const location = useLocation();
     useEffect(() => {
         async function fetchOrders() {
+            setIsLoading(true)
             setLastOrders(await ordersList())
+            setIsLoading(false)
         }
         fetchOrders()
     }, [])
 
     const clickedId = location.state?.id
 
-
-    return(
+    if(isLoading){
+        return(
+            <div>Loading...</div>
+        )
+    }else if(lastOrders.length < 1 && !isLoading){
+        return(
+            <div>Ви ще нічого не замовляли :(</div>
+        )
+    }else {
+        return(
         <div className={styles.content}>
             <span className={styles.caption}>Історія замовлень</span>
             <table>
@@ -32,22 +43,16 @@ function OrdersPage() {
                     <th>Статус</th>
                 </tr>
                 </thead>
-                {lastOrders.length > 0 ?
-                    <tbody>
+                <tbody>
                     {lastOrders.map(order => (
                         <OrderCard item={order} expandable={true} key={order.id} open={clickedId !== undefined ? clickedId === order.id : false}/>
                     ))}
-                    </tbody>
-                    :
-                    <tbody>
-                    <tr>
-                        <td>Loading...</td>
-                    </tr>
-                    </tbody>
-                }
+                </tbody>
             </table>
         </div>
     )
+    }
+
 }
 
 export default OrdersPage;

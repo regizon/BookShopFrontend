@@ -8,6 +8,7 @@ interface UserContextType {
     verifyCode: () => Promise<void>;
 
     isAuthenticated: boolean;
+    isStaff: boolean;
 
 }
 

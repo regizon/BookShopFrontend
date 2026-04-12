@@ -6,17 +6,30 @@ import OrderCard from "../OrderCard/OrderCard.tsx";
 import {useNavigate} from "react-router";
 function RecentOrders(){
     const [lastOrders, setLastOrders] = useState<OrderCardType[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     useEffect(() => {
         async function fetchOrders() {
+            setIsLoading(true);
             setLastOrders(await getOrdersPreview())
+            setIsLoading(false);
         }
         fetchOrders()
     }, [])
 
 
-
-    return(
+    if(isLoading){
+        return(
+            <div>
+                Loading...
+            </div>
+        )
+    }else if(!isLoading && lastOrders.length < 1){
+        return(
+            <div>У вас ще немає замовлень, саме час це виправити!</div>
+        )
+    }else{
+        return(
         <div className={styles.content}>
             <table>
                 <caption className={styles.head}>Останні замовлення</caption>
@@ -29,23 +42,16 @@ function RecentOrders(){
                     <th>Статус</th>
                 </tr>
                 </thead>
-                {lastOrders.length > 0 ?
-                    <tbody>
+                <tbody>
                     {lastOrders.map(order => (
                         <OrderCard item={order} expandable={false} open={false} key={order.id} onClick={() => navigate("/orders/", { state: {id: order.id}, replace: true})}/>
                     ))}
-                    </tbody>
-                    :
-                    <tbody>
-                    <tr>
-                        <td>Loading...</td>
-                    </tr>
-                    </tbody>
-                }
+                </tbody>
             </table>
             <button>Переглянути всі замовлення</button>
         </div>
     )
+    }
 }
 
 export default RecentOrders;

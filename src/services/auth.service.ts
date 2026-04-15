@@ -67,7 +67,6 @@ function verifyCode(email: string, code: string, native_name?: string | null): P
             url: ENDPOINTS.AUTH.VERIFY,
             method: 'post',
             data: payload
-            //data: {"email": email, "code": code, ...(native_name && { native_name })}
         }).then((response) => {
             if (response.status === 200) {
                 return response['data']
@@ -113,4 +112,19 @@ function clearAuth(){
     localStorage.removeItem("refreshToken");
 }
 
-export {sendRegisterCode, sendLoginCode, verifyCode, obtainNewAccessCode, clearAuth};
+
+function checkAdmin(){
+    return(
+        instance({
+            url: ENDPOINTS.AUTH.CHECK,
+            method: 'get',
+        }).then((response) => {
+            return response.status === 200;
+            }
+        ).catch(() =>{
+            return false
+        })
+    )
+}
+
+export {sendRegisterCode, sendLoginCode, verifyCode, obtainNewAccessCode, clearAuth, checkAdmin};

@@ -2,6 +2,10 @@ import {createContext, useContext} from "react";
 
 interface AuthContextType {
     isAuthenticated: boolean;
+    isLogout: boolean;
+    resetLogout: () => void;
+    isAdmin: () => Promise<void>;
+    isStaff: boolean;
     pendingRoot: string| null;
     handlePendingRoot: (root: string) => void;
     login: (access: string, refresh: string) => void;

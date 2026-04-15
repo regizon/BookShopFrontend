@@ -8,6 +8,7 @@ export const ENDPOINTS = {
         LOGIN: '/user/auth/login/',
         REGISTER: '/user/auth/register/',
         REFRESH: '/token/refresh/',
+        CHECK: '/user/auth/check/',
         VERIFY: '/user/auth/verify/',
     },
     BOOKS: {

@@ -36,7 +36,7 @@ function ProfileSettings() {
                 <div className={styles.inputBlock}>
                     <div className={styles.leftInputBlock}>
                         <label htmlFor={"username"}>Ім'я</label>
-                        <input disabled={!isEditing} id={"username"} value={user?.native_name} placeholder={"Ім'я"} onChange={(event) => {
+                        <input disabled={!isEditing} id={"username"} value={user?.native_name || ""} placeholder={"Ім'я"} onChange={(event) => {
                             if(!user) return
                             const name = event.target.value
                             setUser({
@@ -46,7 +46,7 @@ function ProfileSettings() {
                             }
                         }/>
                         <label htmlFor={"phoneNumber"}>Телефон</label>
-                        <input disabled={!isEditing} id={"phoneNumber"} value={user?.phone_number} maxLength={10} placeholder={"Номер телефону"} onChange={(event) => {
+                        <input disabled={!isEditing} id={"phoneNumber"} value={user?.phone_number || ""} maxLength={10} placeholder={"Номер телефону"} onChange={(event) => {
                             if(!user) return
                             setUser({...user,
                                     phone_number: event.target.value});
@@ -55,13 +55,13 @@ function ProfileSettings() {
                     </div>
                     <div className={styles.rightInputBlock}>
                         <label htmlFor={"surname"}>Прізвище</label>
-                        <input disabled={!isEditing} id={"surname"} value={user?.surname} placeholder={"Прізвище"} onChange={(event) => {
+                        <input disabled={!isEditing} id={"surname"} value={user?.surname || ""} placeholder={"Прізвище"} onChange={(event) => {
                             if(!user) return
                             setUser({...user,
                                     surname: event.target.value});
                         }}/>
                         <label htmlFor={"email"}>Email</label>
-                        <input disabled={!isEditing} id={"email"} value={user?.email} placeholder={"Електронна пошта"} type={"email"} onChange={(event) => {
+                        <input disabled={!isEditing} id={"email"} value={user?.email || ""} placeholder={"Електронна пошта"} type={"email"} onChange={(event) => {
                             if(!user) return
                             const email = event.target.value
                             setUser({

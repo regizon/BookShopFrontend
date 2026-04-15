@@ -14,7 +14,7 @@ import GenresMenu from "../GenresMenu/GenresMenu.tsx";
 
 function Header() {
     const {openModal} = useModal();
-    const {isAuthenticated} = useAuth()
+    const {resetLogout} = useAuth()
     const navigate = useNavigate();
     const [searchInput, setSearchInput] = useState("");
     const [openSearchMenu, setOpenSearchMenu] = useState<boolean>();
@@ -88,12 +88,9 @@ function Header() {
               }
           </div>
           <div className={styles.headerRight}>
-              <img className={styles.clickableIcon} src={profile} alt="user_profile" onClick={() =>
-              {if(!isAuthenticated){
-                  {openModal('login')}
-              }else {
+              <img className={styles.clickableIcon} src={profile} alt="user_profile" onClick={() => {
+                  resetLogout()
                   navigate("/profile/")
-              }
               }}/>
               <img src={heart} alt="favorites"/>
               <img className={styles.clickableIcon} src={cart} alt="cart" onClick={() => {openModal('cart')}}/>

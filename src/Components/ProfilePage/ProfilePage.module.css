@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 .content{
     margin: 0 auto;
     max-width: 1300px;
@@ -11,16 +15,31 @@
 .container {
     display: flex;
     flex-direction: row;
-    min-height: 100vh;
+}
+
+.bottomButton {
+    margin-top: auto;
+    align-items: center;
+    display: flex;
+    font-size: 25px;
+    gap: 10px;
+    padding-left: 30px;
+    padding-right: 0;
+    padding-bottom: 30px;
+    cursor: pointer;
 }
 
 .sideBar {
   width: 300px;
   background-color: #f5f7f7;
-  overflow-x: hidden;
+  top: var(--header-height);
   padding-top: var(--profile-offset-top); /* Вирівнювання по першому пункту меню з .content */
   display: flex;
   flex-direction: column;
+  overflow-x: clip;
+  position: sticky;
+  height: calc(100vh - var(--header-height));
+  box-sizing: border-box;
 }
 
 
@@ -32,9 +51,6 @@
   display: block;
 }
 
-/*.sideBar a:hover {*/
-/*  color: #f1f1f1;*/
-/*}*/
 
 .sideBarButton {
     display: flex;
@@ -50,7 +66,3 @@
     width: 100%;
 }
 
-/*@media screen and (max-height: 450px) {*/
-/*  .sideBar {padding-top: 15px;}*/
-/*  .sideBar a {font-size: 18px;}*/
-/*}*/

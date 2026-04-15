@@ -13,6 +13,8 @@ import ProfilePage from "./Components/ProfilePage/ProfilePage.tsx";
 import CategoryPage from "./Components/CategoryPage/CategoryPage.tsx";
 import ProfileSettings from "./Components/ProfileSettings/ProfileSettings.tsx";
 import OrdersPage from "./Components/OrdersPage/OrdersPage.tsx";
+import AdminRoute from "./Components/AdminRoute/AdminRoute.tsx";
+import AddBookPage from "./Components/AddBookPage/AddBookPage.tsx";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <ModalProvider>
@@ -24,13 +26,17 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                           <Route path="/" element={<App />} />
                           <Route element={<ProtectedRoute />}>
                               <Route path={"checkout/"} element={<CheckoutPage />}/>
+                              <Route element={<ProfilePage />}>
+                                  <Route path={"profile/"} element={<ProfileSettings />}/>
+                                  <Route path={"orders/"} element={<OrdersPage />}/>
+                                  <Route element={<AdminRoute />}>
+                                      <Route path={"admin/orders"} element={<OrdersPage />}/>
+                                      <Route path={"admin/add/"} element={<AddBookPage />} />
+                                  </Route>
+                              </Route>
                           </Route>
                           <Route path="books/:bookId" element={<BookPage />} />
                           <Route path="books/category/:slug" element={<CategoryPage />}/>
-                          <Route element={<ProfilePage />}>
-                              <Route path={"profile/"} element={<ProfileSettings />}/>
-                              <Route path={"orders/"} element={<OrdersPage />}/>
-                          </Route>
                       </Route>
                   </Routes>
               </BrowserRouter>

@@ -13,7 +13,6 @@ function GenresMenu() {
     const [genreList, setGenreList] = useState<Genre[]>([]);
     async function collectGenres() {
         const genres = await getGenres()
-        console.log(genres)
         setGenreList(genres)
     }
 
@@ -25,7 +24,7 @@ function GenresMenu() {
     return (
         <div className={styles.content}>
             {genreList.map(item => (
-                <div className={styles.genre}>
+                <div className={styles.genre} key={item.name}>
                     <Link to={`/books/category/${item.slug}`}>{item.name}</Link>
                 </div>
             ))}

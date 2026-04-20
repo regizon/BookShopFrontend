@@ -1,5 +1,4 @@
 .content {
-    min-width: 1000px;
     display: flex;
     flex-direction: column;
     gap: 50px;
@@ -22,4 +21,8 @@ table {
 
 .firstRow {
     background-color: lightgray;
+}
+
+.test {
+    min-height: 2500px;
 }

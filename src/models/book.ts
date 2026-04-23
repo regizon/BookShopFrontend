@@ -12,7 +12,7 @@ export interface BookAllInfo extends Book {
     genres: string[];
     pages: number;
     publisher: string;
-    cover_type: string;
+    coverType: string;
     language: string;
     isbn: number;
 }

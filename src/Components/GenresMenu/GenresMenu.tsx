@@ -2,11 +2,8 @@ import {getGenres} from "../../services/book.service.ts";
 import styles from "./GenresMenu.module.css";
 import {useEffect, useState} from "react";
 import {Link} from "react-router";
+import type Genre from "../../models/genre.ts";
 
-interface Genre {
-    name: string;
-    slug: string;
-}
 
 function GenresMenu() {
 

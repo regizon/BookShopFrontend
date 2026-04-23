@@ -1,0 +1,13 @@
+.dropdown {
+    flex-direction: column;
+    display: flex;
+    position: absolute;
+    padding: 10px;
+    z-index: 1000;
+    gap: 10px;
+    background: #fff;
+    top: 100%;
+    border: 1px solid #e0e0e0;
+    max-height: 400px;
+    overflow-y: auto;
+}

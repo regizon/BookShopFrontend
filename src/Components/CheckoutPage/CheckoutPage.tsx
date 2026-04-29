@@ -180,9 +180,11 @@ function CheckoutPage() {
                 <div className={styles.orderReview}>
                     <h3>Ваше замовлення</h3>
                     <hr/>
-                    {items.map(item => (
+                    <div className={styles.itemsBlock}>
+                        {items.map(item => (
                         <CartItem key={item.book.id} item={item}/>
                     ))}
+                    </div>
                     <div className={styles.finalPrice}>
                         <h2>Всього до сплати</h2>
                         <span>{totalPrice} ₴</span>

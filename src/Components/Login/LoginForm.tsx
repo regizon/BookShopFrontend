@@ -19,6 +19,7 @@ function LoginForm( {sendCode, error, switchToRegistration} : LoginFormProps) {
 
     return (
         <div className={CommonStyles.authContent}>
+            <span className={CommonStyles.test}></span>
             <div className={styles.modalHeader}>
                 <h2>Вхід на сайт</h2>
             </div>

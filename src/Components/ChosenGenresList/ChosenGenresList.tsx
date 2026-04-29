@@ -1,4 +1,4 @@
-import styles from "./ChoosedGenresList.module.css"
+import styles from "./ChosenGenresList.module.css"
 
 interface Genre {
     "id": number;
@@ -12,16 +12,16 @@ interface GenresProps {
     onGenreRemove: (id: number) => void
 }
 
-function ChoosedGenresList(data: GenresProps){
+function ChosenGenresList(data: GenresProps){
     return(
         <>
             {
                 data.chosen.map(item => {
                     const genre = data.variants.find(g => g.id === item)
                     return genre && (
-                        <div className={styles.genreTag}>
+                        <div className={styles.genreTag} key={genre.id}>
                             {genre.name}
-                            <svg onClick={() => data.onGenreRemove(genre.id)} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                            <svg onClick={(e) => {e.stopPropagation(); data.onGenreRemove(genre.id)}} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                                        fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
                                        strokeLinejoin="round" className="lucide lucide-x-icon lucide-x"><path
                                 d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
@@ -34,4 +34,4 @@ function ChoosedGenresList(data: GenresProps){
     )
 }
 
-export default ChoosedGenresList
+export default ChosenGenresList

@@ -1,11 +1,13 @@
 import {createContext, useContext} from "react";
-import type {modalVariations} from "../models/modal.ts";
+import type {ModalOptions, modalVariations} from "../models/modal.ts";
+
+
 
 interface ModalContextType {
 
     currentModal: modalVariations;
-
-    openModal: (type: modalVariations) => void;
+    modalOptions: ModalOptions;
+    openModal: (type: modalVariations, options?: ModalOptions) => void;
     closeModal: () => void;
 }
 

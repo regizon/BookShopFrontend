@@ -9,7 +9,7 @@ interface RegistrationFormProps {
     switchToLogin: () => void;
 }
 
-function RegistrationForm( { error, sendCode} : RegistrationFormProps): JSX.Element {
+function RegistrationForm( { error, sendCode, switchToLogin} : RegistrationFormProps): JSX.Element {
 
     const [userEmail, setUserEmail] = useState<string>("");
     const [userName, setUserName] = useState<string>("");
@@ -34,8 +34,8 @@ function RegistrationForm( { error, sendCode} : RegistrationFormProps): JSX.Elem
             <span className={CommonStyles.error}>{error}</span>
             <button onClick={() => {sendCode(userEmail, userName)}}>Зареєструватися
             </button>
-            <span>Вже є аккаунт?
-                <span className={CommonStyles.registrationLink}>Увійдіть</span>
+            <span>Вже є аккаунт?    
+                <span onClick={switchToLogin} className={CommonStyles.registrationLink}>Увійдіть</span>
             </span>
         </div>
     )

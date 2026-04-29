@@ -29,6 +29,9 @@ function AuthorizationWindow({initialStep}: AuthorizatonWindowsProps){
         setStatus("registration")
     }
 
+    function startLogin(){
+        setStatus("login")
+    }
     async function requestLoginCode(email: string) {
         setUserError("")
         try{
@@ -98,7 +101,7 @@ function AuthorizationWindow({initialStep}: AuthorizatonWindowsProps){
     if (status === "verification"){
         content = <VerifyCodeWindow error={userError} verifyCode={checkCode} email={userEmail} native_name={userName}/>
     } else if (status === "registration"){
-        content = <RegistrationForm error={userError} sendCode={requestRegisterCode} switchToLogin={startRegistration} />
+        content = <RegistrationForm error={userError} sendCode={requestRegisterCode} switchToLogin={startLogin} />
     }
 
 

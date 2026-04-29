@@ -64,14 +64,19 @@ input[type=number] {
 .orderReview {
     display: flex;
     width: 35%;
+    top: var(--header-height);
     flex-direction: column;
     gap: 15px;
     background-color: #FCFAFA;
     border-radius: 8px;
     border: 1px solid lightgray;
-    position: sticky;
     overflow-wrap: break-word;
     padding: 20px 20px 20px 20px;
+}
+
+.itemsBlock {
+    overflow-y: auto;
+    max-height: calc(100vh - 80px);
 }
 
 .confirmOrder button{

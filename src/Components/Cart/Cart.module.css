@@ -12,11 +12,16 @@ a {
     border-radius: 10px;
     border: 2px solid;
     padding: 10px;
+    max-height: calc(100vh - 80px);
     min-width: 300px;
     min-height: 300px;
     max-width: 700px;
     display: flex;
     flex-direction: column;
+}
+
+.modalBody {
+    overflow-y: auto;
 }
 
 .modalHeader img {

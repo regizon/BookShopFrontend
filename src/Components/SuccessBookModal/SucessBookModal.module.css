@@ -1,0 +1,107 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 60, 100, 0.35);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+
+
+.card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 40px 48px;
+  box-shadow: 0 8px 32px rgba(30, 60, 100, 0.18);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  max-width: 420px;
+  width: 100%;
+  animation: slideUp 0.25s ease;
+}
+
+/* ── Icon ── */
+.iconWrap {
+  margin-bottom: 4px;
+}
+
+.icon {
+  width: 56px;
+  height: 56px;
+}
+
+.iconCircle {
+  fill: #2563b8; /* matches the blue of BookHeaven navbar/buttons */
+}
+
+/* ── Text ── */
+.title {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #1a2a3a;
+  text-align: center;
+  letter-spacing: -0.01em;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #7a8fa6;
+  text-align: center;
+}
+
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+  width: 100%;
+  justify-content: center;
+}
+
+.btnPrimary,
+.btnSecondary {
+  flex: 1;
+  min-width: 120px;
+  padding: 11px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+}
+
+.btnPrimary {
+  background: #f5a623;
+  color: #ffffff;
+}
+
+.btnPrimary:hover {
+  background: #e0951a;
+  box-shadow: 0 2px 8px rgba(245, 166, 35, 0.4);
+}
+
+.btnPrimary:active {
+  transform: scale(0.97);
+}
+
+.btnSecondary {
+  background: transparent;
+  color: #2563b8;
+  border: 2px solid #2563b8;
+}
+
+.btnSecondary:hover {
+  background: #eef4fd;
+}
+
+.btnSecondary:active {
+  transform: scale(0.97);
+}

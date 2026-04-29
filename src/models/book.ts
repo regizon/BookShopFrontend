@@ -11,13 +11,14 @@ export interface BookAllInfo extends Book {
     description: string;
     genres: string[];
     pages: number;
-    publisher: string;
-    coverType: string;
+    publisher_read: string;
+    publisher: number,
+    cover_type: string;
     language: string;
     isbn: number;
 }
 
-export interface BookOrderPreview {
+export interface BookOrderPreview extends Book {
     author: string;
     cover: string;
     title: string;

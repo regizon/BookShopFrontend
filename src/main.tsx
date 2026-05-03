@@ -15,6 +15,7 @@ import ProfileSettings from "./Components/ProfileSettings/ProfileSettings.tsx";
 import OrdersPage from "./Components/OrdersPage/OrdersPage.tsx";
 import AdminRoute from "./Components/AdminRoute/AdminRoute.tsx";
 import AddBookPage from "./Components/AddBookPage/AddBookPage.tsx";
+import BookCollectionManager from "./Components/BookCollectionManager/BookCollectionManager.tsx";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <ModalProvider>
@@ -32,6 +33,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                                   <Route element={<AdminRoute />}>
                                       <Route path={"admin/orders"} element={<OrdersPage />}/>
                                       <Route path={"admin/add/"} element={<AddBookPage />} />
+                                      <Route path={"admin/collections/add/"} element={<BookCollectionManager />} />
                                   </Route>
                               </Route>
                           </Route>

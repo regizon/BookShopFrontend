@@ -1,9 +1,6 @@
-export interface CollectionBook {
-    id: number;
-    title: string;
-    author_read: string | string[];
-    cover: string;
-}
+import type { Book } from './book.ts';
+
+export interface CollectionBook extends Book {}
 
 export interface Collection {
     id: number;

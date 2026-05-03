@@ -1,31 +1,31 @@
-import './App.css'
+import styles from './App.module.css';
 import { useState, useEffect } from 'react';
-import BookCard from "./Components/BookCard/BookCard.tsx";
-import {getAll} from "./services/book.service.ts";
-import type {Book} from "./models/book.ts";
-
-
-
+import BookSection from './Components/BookSection/BookSection.tsx';
+import { getCollections } from './services/bookCollection.service.ts';
+import type { Collection } from './models/collection.ts';
 
 function App() {
+    const [collections, setCollections] = useState<Collection[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
-  const [books, setBooks] = useState<Book[]>([])
+    useEffect(() => {
+        getCollections()
+            .then((data) => setCollections(data))
+            .catch(() => setError('Не вдалося завантажити колекції'))
+            .finally(() => setLoading(false));
+    }, []);
 
-  useEffect(() => {
-    getAll().then((res) => {
-        setBooks(res)
-    })
-  }, [])
+    if (loading) return <div className={styles.status}>Завантаження...</div>;
+    if (error) return <div className={styles.status}>{error}</div>;
 
     return (
-      <div className={"app"}>
-         <div style={{display: 'flex', gap: '20px', padding: '20px'}}>
-              {books.map(item => (
-                  <BookCard key={item.id} book={item}/>
-              ))}
-          </div>
-      </div>
-  )
+        <div className={styles.app}>
+            {collections.map((collection) => (
+                <BookSection key={collection.id} collection={collection} />
+            ))}
+        </div>
+    );
 }
 
-export default App
+export default App;

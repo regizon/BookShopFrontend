@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+.section {
+    padding: 24px 0;
+    border-top: 1px solid #ebebeb;
+    font-family: Inter, sans-serif;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.title {
+    font-family: Montserrat, sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0;
+    color: #1a1a1a;
+}
+
+.viewAll {
+    font-size: 13px;
+    font-weight: 500;
+    color: #2a5c8d;
+    text-decoration: none;
+}
+
+.viewAll:hover {
+    text-decoration: underline;
+}
+
+.booksRow {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+}
+
+.booksRow::-webkit-scrollbar {
+    height: 4px;
+}
+
+.booksRow::-webkit-scrollbar-thumb {
+    background: #ddd;
+    border-radius: 4px;
+}

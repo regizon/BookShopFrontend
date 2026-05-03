@@ -126,17 +126,17 @@ function AddBookPage() {
   <rect x="0" y="0" width="7" height="150" fill="#1a2547"/>
   <rect x="7" y="0" width="1" height="150" fill="#4a5f9a"/>
 
-  <rect x="10" y="8" width="84" height="134" fill="none" stroke="#4a5f9a" stroke-width="0.8" rx="1"/>
+  <rect x="10" y="8" width="84" height="134" fill="none" stroke="#4a5f9a" strokeWidth="0.8" rx="1"/>
 
   <rect x="14" y="30" width="72" height="0.5" fill="#4a5f9a"/>
   <rect x="14" y="110" width="72" height="0.5" fill="#4a5f9a"/>
 
-  <ellipse cx="50" cy="70" rx="18" ry="24" fill="none" stroke="#4a5f9a" stroke-width="0.8"/>
+  <ellipse cx="50" cy="70" rx="18" ry="24" fill="none" stroke="#4a5f9a" strokeWidth="0.8"/>
   <circle cx="50" cy="70" r="4" fill="#4a5f9a"/>
 
-  <text x="50" y="24" text-anchor="middle" font-family="Georgia, serif" font-size="7" font-weight="700" fill="#c8d4f0" letter-spacing="1">НАЗВА КНИГИ</text>
+  <text x="50" y="24" textAnchor="middle" fontFamily="Georgia, serif" fontSize="7" fontWeight="700" fill="#c8d4f0" letterSpacing="1">НАЗВА КНИГИ</text>
 
-  <text x="50" y="122" text-anchor="middle" font-family="Georgia, serif" font-size="5" fill="#8a9ec8">Автор книги</text>
+  <text x="50" y="122" textAnchor="middle" fontFamily="Georgia, serif" fontSize="5" fill="#8a9ec8">Автор книги</text>
     </svg>
     return (
         <div className={styles.content}>

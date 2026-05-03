@@ -196,7 +196,6 @@ function AddBookPage() {
                 </button>
             </div>
 
-            {/* ── Book data card ── */}
             <div className={styles.card}>
                 <p className={styles.formSectionLabel}>Інформація про книгу</p>
                 <div className={styles.inputBlock}>

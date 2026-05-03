@@ -14,10 +14,10 @@
 .container {
     display: flex;
     flex-direction: row;
+    margin-left: 300px;
 }
 
 .bottomButton {
-    margin-top: auto;
     align-items: center;
     display: flex;
     font-size: 25px;
@@ -34,9 +34,12 @@
   top: var(--header-height);
   padding-top: var(--profile-offset-top); /* Вирівнювання по першому пункту меню з .content */
   display: flex;
+  justify-content: space-between;
   flex-direction: column;
   overflow-x: clip;
-  position: sticky;
+  position: fixed;
+  left: 0;
+  z-index: 10;
   height: calc(100vh - var(--header-height));
   box-sizing: border-box;
 }

@@ -31,5 +31,9 @@ export const ENDPOINTS = {
     },
     USER: {
         PROFILE: '/user/profile/'
+    },
+    ADMIN_ORDERS: {
+        LIST: '/order/list/',
+        UPDATE: (id: number) => `/order/update/${id}/`,
     }
 };

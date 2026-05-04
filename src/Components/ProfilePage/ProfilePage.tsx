@@ -2,6 +2,7 @@ import styles from "./ProfilePage.module.css"
 import {Link, Outlet, useLocation} from "react-router";
 import {useAuth} from "../../Contexts/AuthContext.ts";
 import Header from "../Header/Header.tsx";
+import ModalHost from "../ModalHost/ModalHost.tsx";
 
 function ProfilePage() {
     const url = useLocation().pathname;
@@ -78,6 +79,7 @@ function ProfilePage() {
                     <Outlet/>
                 </div>
             </div>
+            <ModalHost />
         </div>
     )
 }

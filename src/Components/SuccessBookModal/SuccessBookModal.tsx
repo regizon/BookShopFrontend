@@ -5,6 +5,7 @@ function SuccessBookModal() {
   const {modalOptions, closeModal} = useModal()
   return (
     <div className={styles.overlay}>
+      <>{console.log("я открылся")}</>
       <div className={styles.card}>
         <div className={styles.iconWrap}>
           <svg className={styles.icon} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">

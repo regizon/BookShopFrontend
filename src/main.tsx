@@ -31,7 +31,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                           <Route path="books/:bookId" element={<BookPage />} />
                           <Route path="books/category/:slug" element={<CategoryPage />}/>
                       </Route>
-                      <Route element={<ProfilePge />}>
+                      <Route element={<ProfilePage />}>
                                   <Route path={"profile/"} element={<ProfileSettings />}/>
                                   <Route path={"orders/"} element={<OrdersPage />}/>
                                   <Route element={<AdminRoute />}>

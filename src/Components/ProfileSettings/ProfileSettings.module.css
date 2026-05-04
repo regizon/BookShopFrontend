@@ -30,7 +30,7 @@
 .wrapper {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 50px;
     width: 100%;
     padding-top: var(--profile-offset-top);
@@ -39,6 +39,8 @@
 .lastOrdersContainer {
     min-width: 500px;
     border-radius: 10px;
+    display: flex;
+    flex-direction: column;
 }
 
 .editButton, .saveButton {

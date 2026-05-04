@@ -27,7 +27,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                           <Route path="/" element={<App />} />
                           <Route element={<ProtectedRoute />}>
                               <Route path={"checkout/"} element={<CheckoutPage />}/>
-                              <Route element={<ProfilePage />}>
+                          </Route>
+                          <Route path="books/:bookId" element={<BookPage />} />
+                          <Route path="books/category/:slug" element={<CategoryPage />}/>
+                      </Route>
+                      <Route element={<ProfilePge />}>
                                   <Route path={"profile/"} element={<ProfileSettings />}/>
                                   <Route path={"orders/"} element={<OrdersPage />}/>
                                   <Route element={<AdminRoute />}>
@@ -35,13 +39,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                                       <Route path={"admin/add/"} element={<AddBookPage />} />
                                       <Route path={"admin/collections/add/"} element={<BookCollectionManager />} />
                                   </Route>
-                              </Route>
-                          </Route>
-                          <Route path="books/:bookId" element={<BookPage />} />
-                          <Route path="books/category/:slug" element={<CategoryPage />}/>
                       </Route>
-                  </Routes>
-              </BrowserRouter>
+              </Routes>
+            </BrowserRouter>
           </CartProvider>
       </AuthProvider>
     </ModalProvider>

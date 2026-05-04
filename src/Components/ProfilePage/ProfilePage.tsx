@@ -1,12 +1,14 @@
 import styles from "./ProfilePage.module.css"
 import {Link, Outlet, useLocation} from "react-router";
 import {useAuth} from "../../Contexts/AuthContext.ts";
+import Header from "../Header/Header.tsx";
 
 function ProfilePage() {
     const url = useLocation().pathname;
     const {isStaff, logout} = useAuth()
     return(
         <div>
+            <Header />
             <div className={styles.container}>
                 <div className={styles.sideBar}>
                     <div>

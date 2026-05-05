@@ -4,6 +4,7 @@ import {ordersList} from "../../services/order.service.ts";
 import styles from "./OrdersPage.module.css";
 import OrderCard from "../OrderCard/OrderCard.tsx";
 import {useLocation} from "react-router";
+import EmptyOrders from "../EmptyOrders/EmptyOrders.tsx";
 
 function OrdersPage() {
 
@@ -25,11 +26,12 @@ function OrdersPage() {
         return(
             <div>Loading...</div>
         )
-    }else if(lastOrders.length < 1 && !isLoading){
-        return(
-            <div>Ви ще нічого не замовляли :(</div>
-        )
-    }else {
+    }else if (lastOrders.length < 1 && !isLoading) {
+    return (
+        <EmptyOrders />
+        );
+    }
+    else {
         return(
         <div className={styles.content}>
             <span className={styles.caption}>Історія замовлень</span>

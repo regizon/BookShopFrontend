@@ -14,9 +14,11 @@ function BookCard({ book }:BookCardProps) {
 
     return (
             <div className={`${styles.cardContainer} ${!available ? styles.unavailable : ''}`}>
-                <div className={styles.imageWrapper}>
+                <Link to={`/books/${book.id}`}>
+                    <div className={styles.imageWrapper}>
                     <img src={book.cover}/>
                 </div>
+                </Link>
                 <Link to= {`/books/${book.id}`} className={styles.bookTitle}>{book.title}</Link>
                 <span className={styles.authorName}>{book.author_read}</span>
                 <span className={styles.price}>{book.price} ₴</span>

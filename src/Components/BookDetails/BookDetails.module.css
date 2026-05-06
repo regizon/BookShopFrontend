@@ -303,3 +303,30 @@ td {
     background: #0279ba;
     color: #fff;
 }
+
+.buyRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+}
+
+.buyRow + .buyRow {
+    border-top: 1px solid #e6e6e6;
+}
+
+.buyLabel {
+    color: #555;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.buyAvailability {
+    font-weight: 600;
+}
+
+.buyPriceValue {
+    font-size: 28px;
+    font-weight: 700;
+    color: #111;
+}

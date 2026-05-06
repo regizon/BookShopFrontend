@@ -326,24 +326,32 @@ function BookDetails({book, isStaff, onSave, onDelete, editError, deleteError}: 
                     </table>
                 </div>
                 <div className={`${styles.buyItem} ${!available ? styles.unavailable : ''}`}>
-                    {isEditing ? (
-                        <div className={styles.editPriceRow}>
-                            <input
-                                className={styles.editInput}
-                                type="number"
-                                min={0}
-                                step={0.01}
-                                value={editForm.price}
-                                onChange={e => handleField('price', Number(e.target.value))}
-                            />
-                            <span> грн</span>
-                        </div>
-                    ) : (
-                        <span className={styles.price}>{book.price} грн</span>
-                    )}
-                    <span className={`${styles.available} ${!available ? styles.unavailableText : ''}`}>
-                        {available ? 'В наявності' : 'Немає в наявності'}
-                    </span>
+                    <div className={styles.buyRow}>
+                        <span className={styles.buyLabel}>Наявність</span>
+                        <span className={`${styles.buyAvailability} ${available ? styles.available : styles.unavailableText}`}>
+                            {available ? '✓ В наявності' : 'Немає в наявності'}
+                        </span>
+                    </div>
+                    <div className={styles.buyRow}>
+                        <span className={styles.buyLabel}>Ціна</span>
+                        {isEditing ? (
+                            <div className={styles.editPriceRow}>
+                                <input
+                                    className={styles.editInput}
+                                    type="number"
+                                    min={0}
+                                    step={0.01}
+                                    value={editForm.price}
+                                    onChange={e => handleField('price', Number(e.target.value))}
+                                />
+                                <span> грн</span>
+                            </div>
+                        ) : (
+                            <span className={`${styles.price} ${styles.buyPriceValue}`}>
+                                {book.price.toLocaleString('uk-UA')} грн
+                            </span>
+                        )}
+                    </div>
                     {isEditing && (
                         <div className={styles.editQuantityRow}>
                             <span>Кількість:</span>

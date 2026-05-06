@@ -230,3 +230,11 @@ td {
 .editQuantityRow input {
     width: 70px;
 }
+
+.coverInputWrapper {
+    margin-top: 8px;
+}
+
+.coverInput {
+    width: var(--cover-input-width);
+}

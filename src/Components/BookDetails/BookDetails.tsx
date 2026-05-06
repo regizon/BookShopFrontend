@@ -45,7 +45,9 @@ function BookDetails({book, isStaff, onSave, onDelete, editError, deleteError}: 
     const [isEditing, setIsEditing] = useState<boolean>(false)
     const [editForm, setEditForm] = useState<EditableFields>(bookToEditForm(book))
     const [isSaving, setIsSaving] = useState<boolean>(false)
+    const [coverWidth, setCoverWidth] = useState<number>(0)
     const descriptionRef = useRef<HTMLDivElement>(null)
+    const imgRef = useRef<HTMLImageElement>(null)
 
     useEffect(() => {
         const element = descriptionRef.current
@@ -60,6 +62,12 @@ function BookDetails({book, isStaff, onSave, onDelete, editError, deleteError}: 
             setEditForm(bookToEditForm(book))
         }
     }, [book, isEditing])
+
+    useEffect(() => {
+        if (isEditing && imgRef.current) {
+            setCoverWidth(imgRef.current.offsetWidth)
+        }
+    }, [isEditing])
 
     function handleEditStart() {
         setEditForm(bookToEditForm(book))
@@ -136,15 +144,19 @@ function BookDetails({book, isStaff, onSave, onDelete, editError, deleteError}: 
             )}
             <div className={styles.mainRow}>
                 <div className={styles.bookCover}>
-                    <img src={isEditing ? editForm.cover : book.cover} alt={book.title} />
+                    <img ref={imgRef} src={isEditing ? editForm.cover : book.cover} alt={book.title} />
                     {isEditing && (
-                        <input
-                            className={styles.editInput}
-                            style={{marginTop: 8, width: '20px'}}
-                            placeholder="URL обкладинки"
-                            value={editForm.cover}
-                            onChange={e => handleField('cover', e.target.value)}
-                        />
+                        <div
+                            className={styles.coverInputWrapper}
+                            style={{ '--cover-input-width': `${coverWidth}px` } as React.CSSProperties}
+                        >
+                            <input
+                                className={`${styles.editInput} ${styles.coverInput}`}
+                                placeholder="URL обкладинки"
+                                value={editForm.cover}
+                                onChange={e => handleField('cover', e.target.value)}
+                            />
+                        </div>
                     )}
                 </div>
                 <div className={styles.bookInfo}>

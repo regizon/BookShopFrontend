@@ -1,0 +1,88 @@
+table, th, tr, td {
+    text-align: left;
+    font-family: inherit;
+}
+
+table {
+    width: 100%;
+
+}
+
+table td, table th, table caption {
+    padding: 15px;
+}
+
+table td, table th {
+    border-bottom: 1px solid #DCDCDC;
+}
+
+.head {
+    font-weight: 600;
+    background-color: #F7F7F7;
+    text-align: left;
+}
+
+.content {
+    background-color: #F7F7F7;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    font-family: Montserrat, sans-serif;
+    flex: 1;
+    justify-content: space-between;
+}
+
+.content button {
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: darkorange;
+    cursor: pointer;
+    color: white;
+    font-size: 15px;
+}
+
+.emptyState {
+    background-color: #F7F7F7;
+    border-radius: 10px;
+    padding: 40px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+    font-family: Montserrat, sans-serif;
+    flex: 1;
+    justify-content: flex-end;
+}
+
+.emptyTitle {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 6px;
+    color: #1a1a1a;
+}
+
+.emptySubtitle {
+    font-size: 14px;
+    color: #777;
+    margin: 0;
+    max-width: 280px;
+}
+
+.emptyState button {
+    margin-top: 4px;
+    background-color: darkorange;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 24px;
+    font-size: 15px;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.emptyState button:hover {
+    background-color: #e07800;
+}

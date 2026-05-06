@@ -2,6 +2,7 @@ import {useModal} from "../../Contexts/ModalContext.ts";
 import ModalWrapper from "../ModalWrapper/ModalWrapper.tsx";
 import Cart from "../Cart/Cart.tsx";
 import AuthorizationWindow from "../AuthorizationWindow/AuthorizationWindow.tsx";
+import SuccessBookModal from "../SuccessBookModal/SuccessBookModal.tsx";
 
 
 function ModalHost(){
@@ -21,6 +22,12 @@ function ModalHost(){
                 <AuthorizationWindow initialStep={currentModal} />
             </ModalWrapper>
 
+        )
+    } else if (currentModal === "successBook"){
+        return(
+            <ModalWrapper>
+                <SuccessBookModal/>
+            </ModalWrapper>
         )
     }
 }

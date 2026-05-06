@@ -18,11 +18,16 @@ function Cart(){
                 <h3>Кошик товарів</h3>
                 <img className={styles.closeIcon} src={"../src/assets/close.png"} alt="close" onClick={closeModal}/>
             </div>
-            {items.length > 0 ?
+                <div>
+
+                </div>
+                {items.length > 0 ?
                 <>
-                    {items.map(item => (
-                        <CartItem key={item.book.id} item={item} />
-                    ))}
+                    <div className={styles.modalBody}>
+                        {items.map(item => (
+                            <CartItem key={item.book.id} item={item} />
+                        ))}
+                    </div>
                     <div className={styles.modalFooter}>
                         <div className={styles.leftBlock}>
                             <button onClick={closeModal}>Продовжити покупки</button>

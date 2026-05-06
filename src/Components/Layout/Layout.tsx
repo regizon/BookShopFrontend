@@ -1,6 +1,7 @@
 import { Outlet } from "react-router"
 import Header from "../Header/Header.tsx";
 import ModalHost from "../ModalHost/ModalHost.tsx";
+import Footer from "../Footer/Footer.tsx";
 
 function Layout() {
     return (
@@ -10,6 +11,7 @@ function Layout() {
                 <Outlet />
             </main>
             <ModalHost />
+            <Footer />
         </div>
     )
 }

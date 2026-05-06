@@ -8,11 +8,12 @@ import VerifyCodeWindow from "../AuthorizationCodeVerifyWindow/VerifyCodeWindow.
 import {useModal} from "../../Contexts/ModalContext.ts";
 import RegistrationForm from "../RegistrationForm/RegistrationForm.tsx";
 import {useNavigate} from "react-router";
-
+import isEmailValid from "../../services/emailChecker.ts"
 
 interface AuthorizatonWindowsProps {
     initialStep: AuthStatus
 }
+
 
 function AuthorizationWindow({initialStep}: AuthorizatonWindowsProps){
     const {login, pendingRoot} = useAuth();
@@ -28,11 +29,9 @@ function AuthorizationWindow({initialStep}: AuthorizatonWindowsProps){
         setStatus("registration")
     }
 
-    function isEmailValid(email: string){
-        return !(!email.includes("@") || !email.includes("."));
+    function startLogin(){
+        setStatus("login")
     }
-
-
     async function requestLoginCode(email: string) {
         setUserError("")
         try{
@@ -58,7 +57,11 @@ function AuthorizationWindow({initialStep}: AuthorizatonWindowsProps){
             if(!isEmailValid(email)){
                 setUserError("Щось не так з поштою...")
                 return
-            }else{
+            }else if(native_name.length < 1){
+                setUserError("Мабуть ви забули вказати ім'я")
+                return
+            }
+            else{
                 await sendRegisterCode(email, native_name)
                 setStatus("verification")
                 setUserEmail(email)
@@ -98,7 +101,7 @@ function AuthorizationWindow({initialStep}: AuthorizatonWindowsProps){
     if (status === "verification"){
         content = <VerifyCodeWindow error={userError} verifyCode={checkCode} email={userEmail} native_name={userName}/>
     } else if (status === "registration"){
-        content = <RegistrationForm error={userError} sendCode={requestRegisterCode} switchToLogin={startRegistration} />
+        content = <RegistrationForm error={userError} sendCode={requestRegisterCode} switchToLogin={startLogin} />
     }
 
 

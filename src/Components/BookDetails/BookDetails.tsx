@@ -1,6 +1,6 @@
 import type {BookAllInfo} from "../../models/book.ts";
 import styles from "./BookDetails.module.css"
-import {useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import AddToCartButton from "../AddToCartButton/AddToCartButton.tsx";
 
 interface BookDetailsProps {
@@ -10,6 +10,16 @@ interface BookDetailsProps {
 function BookDetails({book}: BookDetailsProps) {
 
     const [isExpanded, setIsExpanded] = useState<boolean>(false)
+    const [isClamped, setIsClamped] = useState<boolean>(false)
+    const descriptionRef = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+        const element = descriptionRef.current
+        if(element){
+            setIsClamped(element.scrollHeight > element.clientHeight)
+        }
+    }, [book.description])
+
     const available = book.quantity > 0
     return (
         <div className={styles.content}>
@@ -20,11 +30,14 @@ function BookDetails({book}: BookDetailsProps) {
                 <div className={styles.bookInfo}>
                     <h2>{book.title}</h2>
                     <span className={styles.bookAuthor}>{book.author_read}</span>
-                    <div className={isExpanded ? styles.fullDescription : styles.hiddenDescription}>
+                    <div className={isExpanded ? styles.fullDescription : styles.hiddenDescription} ref={descriptionRef}>
                         {book.description}
                     </div>
-                    <button onClick={toggleDescription} className={styles.showMore}>{isExpanded ? 'Сховати' : 'Показати весь опис'}</button>
-                    <h3 className={styles.tableTitle}>Характеристики</h3>
+                    {(isClamped || isExpanded) && (
+                        <button onClick={toggleDescription} className={styles.showMore}>{isExpanded ? 'Сховати' : 'Показати весь опис'}</button>
+                        )
+                    }
+                        <h3 className={styles.tableTitle}>Характеристики</h3>
                     <table>
                         <tbody>
                         <tr>
@@ -33,7 +46,7 @@ function BookDetails({book}: BookDetailsProps) {
                         </tr>
                         <tr>
                             <td>Видавництво</td>
-                            <td className={styles.rightTd}>{book.publisher}</td>
+                            <td className={styles.rightTd}>{book.publisher_read}</td>
                         </tr>
                         <tr>
                             <td>Кількість сторінок</td>

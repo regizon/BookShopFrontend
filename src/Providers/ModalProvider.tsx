@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import {ModalContext} from "../Contexts/ModalContext.ts"
 import type {ReactNode} from 'react'
-import type {modalVariations} from "../models/modal.ts";
+import type {ModalOptions, modalVariations} from "../models/modal.ts";
 
 interface ModalProviderProps {
     children: ReactNode
@@ -9,9 +9,11 @@ interface ModalProviderProps {
 
 const ModalProvider = ({ children }: ModalProviderProps) => {
     const [currentModal, setCurrentModal] = useState<modalVariations>(null);
+    const [modalOptions, setModalOptions] = useState<ModalOptions>({})
 
-    function openModal(type: modalVariations) {
+    function openModal(type: modalVariations, options: ModalOptions = {}) {
         setCurrentModal(type);
+        setModalOptions(options)
     }
 
     function closeModal() {
@@ -21,6 +23,7 @@ const ModalProvider = ({ children }: ModalProviderProps) => {
     return (
         <ModalContext.Provider value={{
             currentModal,
+            modalOptions,
             openModal,
             closeModal
         }}>

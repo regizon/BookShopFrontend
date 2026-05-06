@@ -1,0 +1,58 @@
+.content {
+    border: 0.5px solid #ddd;
+    border-radius: 8px;
+    width: fit-content;
+    min-width: 250px;
+    overflow: hidden;
+}
+
+.caption {
+    background-color: #f0f0f0;
+    width: 100%;
+    padding: 8px 12px;
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #555;
+}
+
+.itemContainer {
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    gap: 12px;
+    position: relative;
+}
+
+.itemContainer + .itemContainer {
+    border-top: 0.5px solid #eee;
+}
+
+.itemContainer img {
+    width: 42px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 3px;
+    flex-shrink: 0;
+}
+
+.detailsDisplay {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+}
+
+.title {
+    font-size: 13px;
+    font-weight: 500;
+    color: #1a1a1a;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.meta {
+    font-size: 12px;
+    color: #888;
+}

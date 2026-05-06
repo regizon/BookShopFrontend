@@ -8,11 +8,15 @@ export const ENDPOINTS = {
         LOGIN: '/user/auth/login/',
         REGISTER: '/user/auth/register/',
         REFRESH: '/token/refresh/',
+        CHECK: '/user/auth/check/',
         VERIFY: '/user/auth/verify/',
     },
     BOOKS: {
-        LIST: '/books',
+        LIST: '/books/',
         DETAIL: (id: string | undefined) => `/books/${id}`,
+        GENRES: '/books/genres',
+        CATEGORY_LIST: (slug: string | undefined) => `/books/category/${slug}`,
+        PARSE: '/books/parse/'
     },
     CART: {
         VIEW: '/cart/view/',
@@ -21,6 +25,15 @@ export const ENDPOINTS = {
         REMOVE: '/cart/delete/'
     },
     ORDERS: {
-        CREATE: '/order/create/'
+        CREATE: '/order/create/',
+        LIST: '/order/list/',
+        PREVIEW: '/order/recent/'
+    },
+    USER: {
+        PROFILE: '/user/profile/'
+    },
+    ADMIN_ORDERS: {
+        LIST: '/order/list/',
+        UPDATE: (id: number) => `/order/update/${id}/`,
     }
 };

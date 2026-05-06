@@ -1,0 +1,70 @@
+* {
+    box-sizing: border-box;
+}
+
+.content{
+    width: 100%;
+    padding: 24px;
+    display: flex;
+    gap: 55px;
+    font-family: Montserrat, sans-serif;
+    flex-direction: column;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    margin-left: 300px;
+}
+
+.bottomButton {
+    align-items: center;
+    display: flex;
+    font-size: 25px;
+    gap: 10px;
+    padding-left: 30px;
+    padding-right: 0;
+    padding-bottom: 30px;
+    cursor: pointer;
+}
+
+.sideBar {
+  width: 300px;
+  background-color: #f5f7f7;
+  top: var(--header-height);
+  padding-top: var(--profile-offset-top); /* Вирівнювання по першому пункту меню з .content */
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  overflow-x: clip;
+  position: fixed;
+  left: 0;
+  z-index: 10;
+  height: calc(100vh - var(--header-height));
+  box-sizing: border-box;
+}
+
+
+.sideBar a {
+  padding: 20px 0 6px 0;
+  text-decoration: none;
+  font-size: 25px;
+  color: black;
+  display: block;
+}
+
+
+.sideBarButton {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.selected {
+    border-left: 3px #0f337a solid;
+    border-right: 3px #0f337a solid;
+    background-color: #bbe4fc9e;
+    padding: 10px;
+    width: 100%;
+}
+

@@ -4,10 +4,10 @@ import {createContext, useContext} from "react";
 interface UserContextType {
     login: () => Promise<void>;
     register: () => Promise<void>;
-
     verifyCode: () => Promise<void>;
 
     isAuthenticated: boolean;
+
 
 }
 

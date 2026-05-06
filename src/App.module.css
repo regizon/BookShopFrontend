@@ -1,0 +1,17 @@
+.app {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+.status {
+    padding: 40px 20px;
+    text-align: center;
+    color: #888;
+    font-family: Inter, sans-serif;
+}
+
+:root {
+    --profile-offset-top: 100px;
+    --header-height: 80px;
+}

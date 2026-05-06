@@ -30,7 +30,7 @@ instance.interceptors.response.use(function onFullFilled(response){
 }, async function onRejected(error){
     const original_request =  error?.config;
     const url = original_request.url;
-    if(error.response?.status === 401 && !original_request._retry && !url.includes('/token/refresh')){
+    if(error.response?.status === 401 && !original_request._retry && !url.includes('/token/refresh') && !url.includes('/user/auth/check/')){
         original_request._retry = true
         if(isRefreshing){
             return new Promise((resolve, reject) => {

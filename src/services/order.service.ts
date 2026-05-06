@@ -1,6 +1,6 @@
 import instance from "./httpClient.ts"
 import {ENDPOINTS} from "./api.constants.ts"
-import type orderDetails from "../models/order.ts";
+import type {orderDetails} from "../models/order.ts";
 
 function createOrder(details: orderDetails){
     return (
@@ -22,4 +22,28 @@ function createOrder(details: orderDetails){
     )
 }
 
-export {createOrder};
+
+function ordersList(){
+    return(
+        instance({
+            url: ENDPOINTS.ORDERS.LIST,
+            method: 'GET',
+        })
+    ).then((response) => {
+        return response['data']
+    })
+}
+
+function getOrdersPreview(){
+    return(
+        instance({
+            url: ENDPOINTS.ORDERS.PREVIEW,
+            method: 'GET'
+        })
+    ).then((response) => {
+        return response['data']
+    })
+}
+
+
+export {createOrder, ordersList, getOrdersPreview};

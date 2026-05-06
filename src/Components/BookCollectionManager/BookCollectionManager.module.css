@@ -1,0 +1,223 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 28px;
+    background: #f5f6fa;
+    min-height: 100vh;
+}
+
+.caption {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0;
+}
+
+/* ── Loader ── */
+.loaderContainer {
+    position: fixed;
+    background-color: #fff;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 32px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 9999;
+    gap: 16px;
+    border-radius: 12px;
+    border: 1px solid #e8e8f0;
+    font-size: 14px;
+    color: #555;
+}
+
+.loader {
+    width: 40px;
+    height: 40px;
+    display: block;
+    position: relative;
+    border: 3px solid #2a5c8d;
+    border-radius: 50%;
+    box-sizing: border-box;
+    animation: animloader 2s linear infinite;
+}
+
+.loader::after {
+    content: '';
+    box-sizing: border-box;
+    width: 5px;
+    height: 20px;
+    background: #2a5c8d;
+    transform: rotate(-45deg);
+    position: absolute;
+    bottom: -16px;
+    left: 38px;
+}
+
+@keyframes animloader {
+    0%   { transform: translate(-8px, -8px); }
+    25%  { transform: translate(-8px, 8px); }
+    50%  { transform: translate(8px, 8px); }
+    75%  { transform: translate(8px, -8px); }
+    100% { transform: translate(-8px, -8px); }
+}
+
+/* ── Tabs ── */
+.tabs {
+    display: flex;
+    border-bottom: 1.5px solid #e2e2ee;
+}
+
+.tab {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #6b6b80;
+    cursor: pointer;
+    margin-bottom: -1.5px;
+    transition: color 0.15s, border-color 0.15s;
+}
+
+.tab:hover {
+    color: #1a1a2e;
+}
+
+.tabActive {
+    color: #2a5c8d;
+    border-bottom-color: #2a5c8d;
+}
+
+/* ── Card ── */
+.card {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #e8e8f0;
+    padding: 24px;
+}
+
+.collectionTitle {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a1a2e;
+    margin: 0 0 20px 0;
+}
+
+/* ── Add row ── */
+.addRow {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.select {
+    flex: 1;
+    height: 40px;
+    border-radius: 8px;
+    border: 1.5px solid #e2e2ee;
+    background: #fafafa;
+    padding: 0 12px;
+    font-size: 14px;
+    color: #1a1a2e;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.select:hover {
+    border-color: #c0c0d0;
+}
+
+.select:focus {
+    border-color: #2a5c8d;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(42, 92, 141, 0.1);
+}
+
+.addButton {
+    height: 40px;
+    padding: 0 20px;
+    background: #2a5c8d;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s;
+}
+
+.addButton:hover:not(:disabled) {
+    background: #3b76b2;
+}
+
+.addButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ── Book list ── */
+.bookList {
+    display: flex;
+    flex-direction: column;
+}
+
+.bookRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0;
+    border-bottom: 1px solid #f0f0f6;
+}
+
+.bookRow:last-child {
+    border-bottom: none;
+}
+
+.bookInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.bookTitle {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a2e;
+}
+
+.bookAuthor {
+    font-size: 13px;
+    color: #6b6b80;
+}
+
+.removeButton {
+    background: none;
+    border: 1.5px solid #e05050;
+    color: #e05050;
+    border-radius: 8px;
+    padding: 6px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s, color 0.15s;
+}
+
+.removeButton:hover {
+    background: #e05050;
+    color: #fff;
+}
+
+/* ── Error ── */
+.errorMessage {
+    color: #e05050;
+    font-size: 13px;
+    margin: 0 0 12px 0;
+}

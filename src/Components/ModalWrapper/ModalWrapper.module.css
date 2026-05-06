@@ -1,11 +1,9 @@
 .modalWindow {
-    position: fixed;
-    top: 35%;
     left: 50%;
-    transform: translate(-50%, -50%);
     z-index: 1000   ;
     background: white;
     border-radius: 10px;
+    max-height: calc(100vh - 80px);
 }
 
 .modalOverlay {

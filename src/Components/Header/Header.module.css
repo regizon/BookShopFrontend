@@ -10,13 +10,15 @@ header {
     background-color: #e6f2f5;
     width: 100%;
     font-family: Montserrat, sans-serif;
-
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 .headerInner {
     max-width: 100%;
     margin: 0 auto;
-    height: 80px;
+    height: var(--header-height);
     padding: 25px 30px;
     display: flex;
     align-items: center;
@@ -42,6 +44,7 @@ header {
 
 .searchContainer {
     max-width: 800px;
+    min-width: 0;
     width: 100%;
     position: relative;
 }
@@ -51,6 +54,7 @@ header {
     border-radius: 25px;
     border-color: #74cafc;
     height: 40px;
+    min-width: 0;
     padding: 0 48px 0 16px;
     font-size: 16px;
     box-sizing: border-box;
@@ -66,20 +70,19 @@ header {
 .headerRight {
   display: flex;
   min-width: 200px;
+  flex: 0 0 auto;
   align-items: center;
 }
 
 .headerLeft {
-    margin-right: auto;
-}
-.headerRight {
-    margin-left: auto;
+    gap: 15px;
 }
 
 .headerCenter {
-    flex: 1;
+    flex: 1 1 0;
     display: flex;
     justify-content: center;
+    min-width: 0;
 }
 
 .headerLeft img {
@@ -96,9 +99,38 @@ header {
     align-items: center;
     display: flex;
     gap: 20px;
-
+    flex: 1;
+    justify-content: flex-end;
 }
 
 .clickableIcon:hover  {
     cursor: pointer;
+}
+
+.categoryButtonContainer {
+    display: flex;
+    position: relative;
+    background-color: #0893cf;
+    align-items: center;
+    border-radius: 7px;
+    font-size: 15px;
+    padding: 10px;
+    color: white;
+    font-family: Montserrat, sans-serif;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.2s ease;
+    gap: 15px;
+}
+
+.categoryButtonContainer:hover {
+    background-color: #0678a8;
+}
+
+.categoryButtonContainer svg{
+    margin-top: 3px;
+}
+
+.relativeElement {
+    position: relative;
 }

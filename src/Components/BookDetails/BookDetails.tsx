@@ -134,13 +134,13 @@ function BookDetails({book, isStaff, onSave, onDelete, editError, deleteError}: 
                     )}
                 </div>
             )}
-            <div className={styles.leftBlock}>
+            <div className={styles.mainRow}>
                 <div className={styles.bookCover}>
                     <img src={isEditing ? editForm.cover : book.cover} alt={book.title} />
                     {isEditing && (
                         <input
                             className={styles.editInput}
-                            style={{marginTop: 8, width: '100%'}}
+                            style={{marginTop: 8, width: '20px'}}
                             placeholder="URL обкладинки"
                             value={editForm.cover}
                             onChange={e => handleField('cover', e.target.value)}
@@ -244,39 +244,39 @@ function BookDetails({book, isStaff, onSave, onDelete, editError, deleteError}: 
                         </tbody>
                     </table>
                 </div>
-            </div>
-            <div className={`${styles.buyItem} ${!available ? styles.unavailable : ''}`}>
-                {isEditing ? (
-                    <div className={styles.editPriceRow}>
-                        <input
-                            className={styles.editInput}
-                            type="number"
-                            min={0}
-                            step={0.01}
-                            value={editForm.price}
-                            onChange={e => handleField('price', Number(e.target.value))}
-                        />
-                        <span> грн</span>
-                    </div>
-                ) : (
-                    <span className={styles.price}>{book.price} грн</span>
-                )}
-                <span className={`${styles.available} ${!available ? styles.unavailableText : ''}`}>
-                    {available ? 'В наявності' : 'Немає в наявності'}
-                </span>
-                {isEditing && (
-                    <div className={styles.editQuantityRow}>
-                        <span>Кількість:</span>
-                        <input
-                            className={styles.editInput}
-                            type="number"
-                            min={0}
-                            value={editForm.quantity}
-                            onChange={e => handleField('quantity', Number(e.target.value))}
-                        />
-                    </div>
-                )}
-                <AddToCartButton bookId={book.id} />
+                <div className={`${styles.buyItem} ${!available ? styles.unavailable : ''}`}>
+                    {isEditing ? (
+                        <div className={styles.editPriceRow}>
+                            <input
+                                className={styles.editInput}
+                                type="number"
+                                min={0}
+                                step={0.01}
+                                value={editForm.price}
+                                onChange={e => handleField('price', Number(e.target.value))}
+                            />
+                            <span> грн</span>
+                        </div>
+                    ) : (
+                        <span className={styles.price}>{book.price} грн</span>
+                    )}
+                    <span className={`${styles.available} ${!available ? styles.unavailableText : ''}`}>
+                        {available ? 'В наявності' : 'Немає в наявності'}
+                    </span>
+                    {isEditing && (
+                        <div className={styles.editQuantityRow}>
+                            <span>Кількість:</span>
+                            <input
+                                className={styles.editInput}
+                                type="number"
+                                min={0}
+                                value={editForm.quantity}
+                                onChange={e => handleField('quantity', Number(e.target.value))}
+                            />
+                        </div>
+                    )}
+                    <AddToCartButton bookId={book.id} />
+                </div>
             </div>
         </div>
     )

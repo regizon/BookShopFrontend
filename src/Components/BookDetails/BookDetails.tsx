@@ -1,4 +1,4 @@
-import type {BookAllInfo} from "../../models/book.ts";
+import type {BookAllInfo, BookPatchPayload} from "../../models/book.ts";
 import styles from "./BookDetails.module.css"
 import {useEffect, useRef, useState} from "react";
 import AddToCartButton from "../AddToCartButton/AddToCartButton.tsx";
@@ -10,7 +10,7 @@ type EditableFields = {
     pages: number;
     cover_type: string;
     language: string;
-    isbn: number;
+    isbn: string;
     quantity: number;
     cover: string;
 }
@@ -18,7 +18,7 @@ type EditableFields = {
 interface BookDetailsProps {
     book: BookAllInfo;
     isStaff: boolean;
-    onSave: (fields: Partial<BookAllInfo>) => Promise<void>;
+    onSave: (fields: BookPatchPayload) => Promise<void>;
     onDelete: () => void;
     editError: string | null;
     deleteError: string | null;
@@ -32,7 +32,7 @@ function bookToEditForm(b: BookAllInfo): EditableFields {
         pages: b.pages,
         cover_type: b.cover_type,
         language: b.language,
-        isbn: b.isbn,
+        isbn: String(b.isbn),
         quantity: b.quantity,
         cover: b.cover,
     }
@@ -46,6 +46,9 @@ function BookDetails({book, isStaff, onSave, onDelete, editError, deleteError}: 
     const [editForm, setEditForm] = useState<EditableFields>(bookToEditForm(book))
     const [isSaving, setIsSaving] = useState<boolean>(false)
     const [coverWidth, setCoverWidth] = useState<number>(0)
+    const [editAuthors, setEditAuthors] = useState<string[]>([...book.author_read])
+    const [editPublisher, setEditPublisher] = useState<string>(book.publisher_read)
+    const [newAuthorInput, setNewAuthorInput] = useState<string>('')
     const descriptionRef = useRef<HTMLDivElement>(null)
     const imgRef = useRef<HTMLImageElement>(null)
 
@@ -60,6 +63,8 @@ function BookDetails({book, isStaff, onSave, onDelete, editError, deleteError}: 
     useEffect(() => {
         if (!isEditing) {
             setEditForm(bookToEditForm(book))
+            setEditAuthors([...book.author_read])
+            setEditPublisher(book.publisher_read)
         }
     }, [book, isEditing])
 
@@ -71,11 +76,17 @@ function BookDetails({book, isStaff, onSave, onDelete, editError, deleteError}: 
 
     function handleEditStart() {
         setEditForm(bookToEditForm(book))
+        setEditAuthors([...book.author_read])
+        setEditPublisher(book.publisher_read)
+        setNewAuthorInput('')
         setIsEditing(true)
     }
 
     function handleCancel() {
         setEditForm(bookToEditForm(book))
+        setEditAuthors([...book.author_read])
+        setEditPublisher(book.publisher_read)
+        setNewAuthorInput('')
         setIsEditing(false)
     }
 
@@ -84,12 +95,18 @@ function BookDetails({book, isStaff, onSave, onDelete, editError, deleteError}: 
     }
 
     async function handleSave() {
-        const diff: Partial<BookAllInfo> = {}
+        const diff: BookPatchPayload = {}
         ;(Object.keys(editForm) as (keyof EditableFields)[]).forEach(key => {
             if ((editForm[key] as unknown) !== (book[key] as unknown)) {
                 (diff as Record<string, unknown>)[key] = editForm[key]
             }
         })
+        if (JSON.stringify(editAuthors) !== JSON.stringify(book.author_read)) {
+            diff.authors = editAuthors
+        }
+        if (editPublisher !== book.publisher_read) {
+            diff.publisher = editPublisher
+        }
         if (Object.keys(diff).length === 0) {
             setIsEditing(false)
             return
@@ -169,7 +186,9 @@ function BookDetails({book, isStaff, onSave, onDelete, editError, deleteError}: 
                     ) : (
                         <h2>{book.title}</h2>
                     )}
-                    <span className={styles.bookAuthor}>{book.author_read}</span>
+                    <span className={styles.bookAuthor}>
+                        {isEditing ? editAuthors.join(', ') : book.author_read.join(', ')}
+                    </span>
 
                     {isEditing ? (
                         <textarea
@@ -196,11 +215,59 @@ function BookDetails({book, isStaff, onSave, onDelete, editError, deleteError}: 
                         <tbody>
                         <tr>
                             <td>Автор</td>
-                            <td className={styles.rightTd}>{book.author_read}</td>
+                            <td className={styles.rightTd}>
+                                {isEditing ? (
+                                    <div className={styles.authorEditor}>
+                                        <div className={styles.authorTagList}>
+                                            {editAuthors.map((name, i) => (
+                                                <span key={i} className={styles.authorTag}>
+                                                    {name}
+                                                    <button
+                                                        className={styles.authorTagRemove}
+                                                        onClick={() => setEditAuthors(editAuthors.filter((_, idx) => idx !== i))}
+                                                        title="Видалити автора"
+                                                    >×</button>
+                                                </span>
+                                            ))}
+                                        </div>
+                                        <div className={styles.authorAddRow}>
+                                            <input
+                                                className={styles.editInput}
+                                                placeholder="Ім'я автора"
+                                                value={newAuthorInput}
+                                                onChange={e => setNewAuthorInput(e.target.value)}
+                                                onKeyDown={e => {
+                                                    if (e.key === 'Enter' && newAuthorInput.trim()) {
+                                                        setEditAuthors([...editAuthors, newAuthorInput.trim()])
+                                                        setNewAuthorInput('')
+                                                    }
+                                                }}
+                                            />
+                                            <button
+                                                className={styles.authorAddBtn}
+                                                onClick={() => {
+                                                    if (newAuthorInput.trim()) {
+                                                        setEditAuthors([...editAuthors, newAuthorInput.trim()])
+                                                        setNewAuthorInput('')
+                                                    }
+                                                }}
+                                            >Додати</button>
+                                        </div>
+                                    </div>
+                                ) : book.author_read.join(', ')}
+                            </td>
                         </tr>
                         <tr>
                             <td>Видавництво</td>
-                            <td className={styles.rightTd}>{book.publisher_read}</td>
+                            <td className={styles.rightTd}>
+                                {isEditing ? (
+                                    <input
+                                        className={styles.editInput}
+                                        value={editPublisher}
+                                        onChange={e => setEditPublisher(e.target.value)}
+                                    />
+                                ) : book.publisher_read}
+                            </td>
                         </tr>
                         <tr>
                             <td>Кількість сторінок</td>
@@ -246,9 +313,11 @@ function BookDetails({book, isStaff, onSave, onDelete, editError, deleteError}: 
                                 {isEditing ? (
                                     <input
                                         className={styles.editInput}
-                                        type="number"
+                                        type="text"
+                                        inputMode="numeric"
+                                        maxLength={13}
                                         value={editForm.isbn}
-                                        onChange={e => handleField('isbn', Number(e.target.value))}
+                                        onChange={e => handleField('isbn', e.target.value.replace(/\D/g, '').slice(0, 13))}
                                     />
                                 ) : book.isbn}
                             </td>

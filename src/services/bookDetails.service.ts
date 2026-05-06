@@ -1,6 +1,6 @@
 import instance from "./httpClient.ts"
 import {ENDPOINTS} from "./api.constants.ts";
-import type {BookAllInfo} from "../models/book.ts";
+import type {BookAllInfo, BookPatchPayload} from "../models/book.ts";
 
 function getDetails(id: string | undefined) {
     return (
@@ -13,7 +13,7 @@ function getDetails(id: string | undefined) {
     )
 }
 
-export function patchBook(id: string | undefined, fields: Partial<BookAllInfo>) {
+export function patchBook(id: string | undefined, fields: BookPatchPayload) {
     return instance({
         url: ENDPOINTS.BOOKS.DETAIL(id),
         method: 'patch',

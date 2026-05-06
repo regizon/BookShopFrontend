@@ -8,7 +8,7 @@ interface AuthContextType {
     isStaff: boolean;
     pendingRoot: string| null;
     handlePendingRoot: (root: string) => void;
-    login: (access: string, refresh: string) => void;
+    login: (access: string, refresh: string) => Promise<boolean>;
     logout: () => void;
     refreshAccessToken: () => void;
 }

@@ -238,3 +238,68 @@ td {
 .coverInput {
     width: var(--cover-input-width);
 }
+
+.authorEditor {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-end;
+}
+
+.authorTagList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: flex-end;
+}
+
+.authorTag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #e8f0fe;
+    border: 1px solid #b3c9f9;
+    border-radius: 14px;
+    padding: 3px 8px 3px 12px;
+    font-size: 13px;
+}
+
+.authorTagRemove {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    line-height: 1;
+    color: #666;
+    padding: 0;
+    font-family: inherit;
+}
+
+.authorTagRemove:hover {
+    color: #d9534f;
+}
+
+.authorAddRow {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    width: 100%;
+}
+
+.authorAddBtn {
+    padding: 4px 12px;
+    border-radius: 5px;
+    border: 1px solid #0279ba;
+    background: #e8f4fc;
+    color: #0279ba;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.authorAddBtn:hover {
+    background: #0279ba;
+    color: #fff;
+}

@@ -42,7 +42,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                                       <Route path={"admin/collections/add/"} element={<BookCollectionManager />} />
                                   </Route>
                       </Route>
-                  </Route>.
+                  </Route>
               </Routes>
             </BrowserRouter>
           </CartProvider>

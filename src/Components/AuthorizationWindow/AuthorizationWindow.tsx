@@ -16,7 +16,7 @@ interface AuthorizatonWindowsProps {
 
 
 function AuthorizationWindow({initialStep}: AuthorizatonWindowsProps){
-    const {login, pendingRoot} = useAuth();
+    const {login, pendingRoot, isStaff} = useAuth();
     const navigate = useNavigate();
 
     const [userName, setUserName] = useState<string | null>(null);
@@ -79,11 +79,15 @@ function AuthorizationWindow({initialStep}: AuthorizatonWindowsProps){
         try {
            const data = await verifyCode(email, code, native_name);
            const {refresh, access} = data.tokens;
-           login(access, refresh)
+           const userAdmin = await login(access, refresh)
             closeModal()
-            if(pendingRoot !== null){
+            console.log(userAdmin)
+            if(pendingRoot !== null && !userAdmin){
                 navigate(pendingRoot)
-        }
+            }
+            else{
+                navigate('/admin/orders/')
+            }
         } catch (error) {
             if (error instanceof Error)
             setUserError(error.message)

@@ -1,11 +1,11 @@
 import { useParams, useNavigate } from "react-router";
 import {useEffect, useState} from "react";
 import getDetails, {patchBook, deleteBook} from "../../services/bookDetails.service";
-import type {BookAllInfo} from "../../models/book.ts";
+import type {BookAllInfo, BookPatchPayload} from "../../models/book.ts";
 import BookDetails from "../BookDetails/BookDetails.tsx";
 import {isAxiosError} from "axios";
 import {useAuth} from "../../Contexts/AuthContext.ts";
-
+import styles from "./BookPage.module.css"
 
 function BookPage(){
     const [info, setInfo] = useState<BookAllInfo>();
@@ -40,7 +40,7 @@ function BookPage(){
         getData();
   }, [params.bookId])
 
-    async function handleSave(fields: Partial<BookAllInfo>) {
+    async function handleSave(fields: BookPatchPayload) {
         setEditError(null);
         try {
             const updated = await patchBook(params.bookId, fields);
@@ -69,7 +69,10 @@ function BookPage(){
 
     if(isLoading){
         return(
-            <div><h1>I'm loading</h1></div>
+            <div className={styles.content}>
+                <div className={styles.loader}></div>
+                <h3>Завантажуюсь...</h3>
+            </div>
         )
     }
     else {

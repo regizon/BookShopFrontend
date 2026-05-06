@@ -47,6 +47,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
         localStorage.clear()
         setIsLogout(true)
         setIsAuthenticated(false)
+        setIsStaff(false)
         return(
             <Navigate to="" replace/>
         )

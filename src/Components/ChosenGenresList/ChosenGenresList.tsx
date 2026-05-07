@@ -1,35 +1,41 @@
 import styles from "./ChosenGenresList.module.css"
-
-interface Genre {
-    "id": number;
-    "name": string;
-}
+import type Genre from "../../models/genre.ts";
+import {Link} from "react-router";
 
 interface GenresProps {
-    chosen: number[],
-    variants: Genre[],
-    // onGenreAdd: (id: number) => void,
-    onGenreRemove: (id: number) => void
+    chosen: number[];
+    variants: Genre[];
+    isEditing: boolean;
+    onRemove?: (id: number) => void;
 }
 
-function ChosenGenresList(data: GenresProps){
-    return(
+function ChosenGenresList({ chosen, variants, isEditing, onRemove }: GenresProps) {
+    return (
         <>
-            {
-                data.chosen.map(item => {
-                    const genre = data.variants.find(g => g.id === item)
-                    return genre && (
-                        <div className={styles.genreTag} key={genre.id}>
-                            {genre.name}
-                            <svg onClick={(e) => {e.stopPropagation(); data.onGenreRemove(genre.id)}} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                       fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
-                                       strokeLinejoin="round" className="lucide lucide-x-icon lucide-x"><path
-                                d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-                        </div>
-                    )
-                    }
+            {chosen.map(item => {
+                const genre = variants.find(g => g.id === item)
+                return genre && (
+                    <div className={styles.genreTag} key={genre.id}>
+                        {isEditing ? (
+                            <span>{genre.name}</span>
+                        ) : (
+                            <Link className={styles.genreTagLink} to={`/books/category/${genre.slug}/`}>
+                                {genre.name}
+                            </Link>
+                        )}
+                        {isEditing && (
+                            <svg
+                                onClick={(e) => { e.stopPropagation(); onRemove?.(genre.id) }}
+                                xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                                strokeLinejoin="round" className="lucide lucide-x-icon lucide-x"
+                            >
+                                <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+                            </svg>
+                        )}
+                    </div>
                 )
-            }
+            })}
         </>
     )
 }

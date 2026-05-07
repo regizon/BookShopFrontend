@@ -84,7 +84,7 @@ function Header() {
                 <input onChange={(event: { target: { value: SetStateAction<string> } }) => {
                     setSearchInput(event.target.value);
                     setOpenSearchMenu(true)
-                }} placeholder={"Пошук книг, авторів, жанрів..."}/>
+                }} placeholder={"Уведіть назву книги"}/>
               {foundBooks.length > 0 && openSearchMenu &&
                   <SearchResults bookList={foundBooks} />
               }

@@ -1,0 +1,183 @@
+.page {
+    font-family: Inter, sans-serif;
+    padding: 20px 0;
+}
+
+.pageHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.categoryTitle {
+    font-family: Montserrat, sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 32px;
+    align-items: start;
+}
+
+/* ── Filter panel ── */
+.filterPanel {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.filterTitle {
+    font-family: Montserrat, sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin: 0 0 16px 0;
+}
+
+.filterSection {
+    border-top: 1px solid #e8e8e8;
+    padding: 10px 0;
+}
+
+.sectionHeader {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: none;
+    border: none;
+    padding: 4px 0;
+    cursor: pointer;
+    font-family: Inter, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #111;
+}
+
+.sectionHeader:hover {
+    color: darkorange;
+}
+
+.sectionChevron {
+    font-size: 11px;
+    color: #888;
+    user-select: none;
+}
+
+.checkboxList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.checkboxLabel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    color: #333;
+}
+
+.checkboxLabel input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: darkorange;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+/* ── Price slider ── */
+.priceFilter {
+    margin-top: 10px;
+}
+
+.sliderWrapper {
+    position: relative;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.sliderTrack {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: #e0e0e0;
+    border-radius: 2px;
+}
+
+.sliderFill {
+    position: absolute;
+    height: 4px;
+    background: darkorange;
+    border-radius: 2px;
+}
+
+.rangeInput {
+    position: absolute;
+    width: 100%;
+    height: 4px;
+    background: transparent;
+    pointer-events: none;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
+}
+
+.rangeInput::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    pointer-events: all;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: darkorange;
+    cursor: pointer;
+    border: 2px solid #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+}
+
+.rangeInput::-moz-range-thumb {
+    pointer-events: all;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: darkorange;
+    cursor: pointer;
+    border: 2px solid #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+}
+
+.priceLabels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #555;
+    margin-top: 4px;
+}
+
+/* ── Book grid ── */
+.bookGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+    align-content: start;
+}
+
+.statusMessage {
+    grid-column: 1 / -1;
+    font-size: 16px;
+    color: #888;
+    padding: 40px 0;
+}

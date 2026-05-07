@@ -16,6 +16,7 @@ export const ENDPOINTS = {
         DETAIL: (id: string | undefined) => `/books/${id}/`,
         GENRES: '/books/genres/',
         CATEGORY_LIST: (slug: string | undefined) => `/books/category/${slug}/`,
+        CATEGORY_FILTERS: (slug: string | undefined) => `/books/category/${slug}/filters/`,
         PARSE: '/books/parse/'
     },
     CART: {

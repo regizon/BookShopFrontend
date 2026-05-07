@@ -38,3 +38,20 @@
     line-height: 1;
     gap: 5px;
 }
+
+.priceBlock {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.priceOriginal {
+    color: gray;
+    text-decoration: line-through;
+    font-size: 12px;
+}
+
+.priceDiscount {
+    color: darkred;
+    font-weight: 700;
+}

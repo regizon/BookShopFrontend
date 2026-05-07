@@ -2,6 +2,7 @@ export interface Book {
     id: number;
     title: string;
     price: number;
+    discount_price: number | null;
     cover: string;
     author_read: string[];
     quantity: number;

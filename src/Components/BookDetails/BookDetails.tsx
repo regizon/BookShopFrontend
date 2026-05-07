@@ -11,6 +11,7 @@ type EditableFields = {
     title: string;
     description: string;
     price: number;
+    discount_price: number | null;
     pages: number;
     cover_type: string;
     language: string;
@@ -33,6 +34,7 @@ function bookToEditForm(b: BookAllInfo): EditableFields {
         title: b.title,
         description: b.description,
         price: b.price,
+        discount_price: b.discount_price,
         pages: b.pages,
         cover_type: b.cover_type,
         language: b.language,
@@ -442,11 +444,43 @@ function BookDetails({book, isStaff, onSave, onDelete, editError, deleteError}: 
                                 <span> грн</span>
                             </div>
                         ) : (
-                            <span className={`${styles.price} ${styles.buyPriceValue}`}>
-                                {book.price.toLocaleString('uk-UA')} грн
-                            </span>
+                            book.discount_price != null ? (
+                                <div className={styles.priceBlock}>
+                                    <span className={styles.priceOriginal}>{book.price.toLocaleString('uk-UA')} грн</span>
+                                    <span className={`${styles.buyPriceValue} ${styles.priceDiscount}`}>
+                                        {book.discount_price.toLocaleString('uk-UA')} грн
+                                    </span>
+                                </div>
+                            ) : (
+                                <span className={`${styles.price} ${styles.buyPriceValue}`}>
+                                    {book.price.toLocaleString('uk-UA')} грн
+                                </span>
+                            )
                         )}
                     </div>
+                    {isStaff && (
+                        <div className={styles.buyRow}>
+                            <span className={styles.buyLabel}>Ціна зі знижкою</span>
+                            {isEditing ? (
+                                <div className={styles.editPriceRow}>
+                                    <input
+                                        className={styles.editInput}
+                                        type="number"
+                                        min={0}
+                                        step={1}
+                                        placeholder="—"
+                                        value={editForm.discount_price ?? ''}
+                                        onChange={e => handleField('discount_price', e.target.value === '' ? null : Number(e.target.value))}
+                                    />
+                                    <span> грн</span>
+                                </div>
+                            ) : (
+                                <span className={`${styles.price} ${styles.buyPriceValue}`}>
+                                    {book.discount_price != null ? book.discount_price.toLocaleString('uk-UA') + ' грн' : '—'}
+                                </span>
+                            )}
+                        </div>
+                    )}
                     {isEditing && (
                         <div className={styles.editQuantityRow}>
                             <span>Кількість:</span>

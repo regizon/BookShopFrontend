@@ -20,7 +20,6 @@ interface CategoryFilterOptions {
 
 type SectionKey = 'authors' | 'language' | 'coverType' | 'price';
 
-/** Returns the page numbers (and '...' sentinels) to render in the bar. */
 function buildPageItems(current: number, total: number): (number | '...')[] {
     if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
 
@@ -51,7 +50,6 @@ function CategoryPage() {
     const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
     const [selectedCoverTypes, setSelectedCoverTypes] = useState<string[]>([]);
 
-    // Price slider: local (UI) vs apiPrice (debounced → triggers fetch)
     const [priceSlider, setPriceSlider] = useState<[number, number]>([0, 0]);
     const [apiPrice, setApiPrice]       = useState<[number, number] | null>(null);
     const limitMin   = useRef(0);
@@ -63,7 +61,6 @@ function CategoryPage() {
         authors: true, language: true, coverType: true, price: true,
     });
 
-    // ── Fetch filter options whenever the slug changes ──────────────────────
     useEffect(() => {
         if (!slug) return;
         setFilterOptions(null);
@@ -82,7 +79,6 @@ function CategoryPage() {
         }).catch(() => {});
     }, [slug]);
 
-    // ── Fetch books whenever slug, filters, or page changes ─────────────────
     useEffect(() => {
         if (!slug) return;
         setIsLoading(true);
@@ -102,7 +98,6 @@ function CategoryPage() {
             setBookList(data.results);
             setTotalCount(data.count);
             setIsLoading(false);
-            // Scroll the grid into view after a page change
             bookGridRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }).catch((error: unknown) => {
             if (isAxiosError(error)) setErrorCode(error.response?.status ?? null);
@@ -110,7 +105,6 @@ function CategoryPage() {
         });
     }, [slug, selectedAuthors, selectedLanguages, selectedCoverTypes, apiPrice, currentPage]);
 
-    // ── Helpers ─────────────────────────────────────────────────────────────
     function toggleItem(arr: string[], item: string): string[] {
         return arr.includes(item) ? arr.filter(x => x !== item) : [...arr, item];
     }
@@ -121,7 +115,7 @@ function CategoryPage() {
 
     function handlePriceChange(min: number, max: number) {
         setPriceSlider([min, max]);
-        setCurrentPage(1); // reset page immediately so the debounced fetch lands on p.1
+        setCurrentPage(1);
         clearTimeout(debounceRef.current);
         debounceRef.current = setTimeout(() => setApiPrice([min, max]), 400);
     }
@@ -131,7 +125,6 @@ function CategoryPage() {
         setCurrentPage(page);
     }
 
-    // ── Derived values ───────────────────────────────────────────────────────
     const totalPages = Math.ceil(totalCount / PAGE_SIZE);
     const pageItems  = buildPageItems(currentPage, totalPages);
 
@@ -154,11 +147,9 @@ function CategoryPage() {
             </div>
 
             <div className={styles.layout}>
-                {/* ── Filter panel ── */}
                 <aside className={styles.filterPanel}>
                     <h2 className={styles.filterTitle}>ФІЛЬТРИ</h2>
 
-                    {/* Authors */}
                     <div className={styles.filterSection}>
                         <button className={styles.sectionHeader} onClick={() => toggleSection('authors')}>
                             <span>Автори</span>
@@ -183,7 +174,6 @@ function CategoryPage() {
                         )}
                     </div>
 
-                    {/* Language */}
                     <div className={styles.filterSection}>
                         <button className={styles.sectionHeader} onClick={() => toggleSection('language')}>
                             <span>Мова</span>
@@ -208,7 +198,6 @@ function CategoryPage() {
                         )}
                     </div>
 
-                    {/* Cover type */}
                     <div className={styles.filterSection}>
                         <button className={styles.sectionHeader} onClick={() => toggleSection('coverType')}>
                             <span>Тип палітурки</span>
@@ -233,7 +222,6 @@ function CategoryPage() {
                         )}
                     </div>
 
-                    {/* Price */}
                     <div className={styles.filterSection}>
                         <button className={styles.sectionHeader} onClick={() => toggleSection('price')}>
                             <span>Ціна</span>
@@ -277,7 +265,6 @@ function CategoryPage() {
                     </div>
                 </aside>
 
-                {/* ── Book grid ── */}
                 <main className={styles.bookGrid} ref={bookGridRef}>
                     {isLoading ? (
                         <p className={styles.statusMessage}>Завантаження...</p>
@@ -289,7 +276,6 @@ function CategoryPage() {
                 </main>
             </div>
 
-            {/* ── Pagination bar ── */}
             {!isLoading && totalPages > 1 && (
                 <div className={styles.paginationWrapper}>
                     <nav className={styles.paginationBar} aria-label="Pagination">

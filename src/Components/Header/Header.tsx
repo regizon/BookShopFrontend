@@ -95,7 +95,6 @@ function Header() {
                   navigate(isStaff ? "/admin/orders/" : "/profile/")
               }}/>
 
-              <img src={heart} alt="favorites"/>
               <div className={styles.cartWrapper}>
                   <img className={styles.clickableIcon} src={cart} alt="cart" onClick={() => {openModal('cart')}}/>
                   {items.length > 0 && <span className={styles.cartBadge}>{items.length}</span>}

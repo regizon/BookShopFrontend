@@ -1,10 +1,13 @@
 import { useParams } from "react-router";
 import { useEffect, useState, useRef } from "react";
 import type { Book } from "../../models/book.ts";
+import type { PaginatedResponse } from "../../services/book.service.ts";
 import { isAxiosError } from "axios";
 import { getAllByGenre, getCategoryFilters } from "../../services/book.service.ts";
 import BookCard from "../BookCard/BookCard.tsx";
 import styles from "./CategoryPage.module.css";
+
+const PAGE_SIZE = 12;
 
 interface CategoryFilterOptions {
     genre_name: string;
@@ -17,33 +20,50 @@ interface CategoryFilterOptions {
 
 type SectionKey = 'authors' | 'language' | 'coverType' | 'price';
 
+/** Returns the page numbers (and '...' sentinels) to render in the bar. */
+function buildPageItems(current: number, total: number): (number | '...')[] {
+    if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+
+    const items: (number | '...')[] = [];
+    const left  = Math.max(2, current - 1);
+    const right = Math.min(total - 1, current + 1);
+
+    items.push(1);
+    if (left > 2) items.push('...');
+    for (let p = left; p <= right; p++) items.push(p);
+    if (right < total - 1) items.push('...');
+    items.push(total);
+
+    return items;
+}
+
 function CategoryPage() {
     const { slug } = useParams<{ slug: string }>();
 
     const [isLoading, setIsLoading] = useState(true);
     const [errorCode, setErrorCode] = useState<number | null>(null);
     const [bookList, setBookList] = useState<Book[]>([]);
-    const [filterOptions, setFilterOptions] = useState<CategoryFilterOptions | null>(null);
+    const [totalCount, setTotalCount] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
 
+    const [filterOptions, setFilterOptions] = useState<CategoryFilterOptions | null>(null);
     const [selectedAuthors, setSelectedAuthors] = useState<string[]>([]);
     const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
     const [selectedCoverTypes, setSelectedCoverTypes] = useState<string[]>([]);
 
-    // Price slider: local (UI) vs api (debounced, triggers fetch)
+    // Price slider: local (UI) vs apiPrice (debounced → triggers fetch)
     const [priceSlider, setPriceSlider] = useState<[number, number]>([0, 0]);
-    const [apiPrice, setApiPrice] = useState<[number, number] | null>(null);
-    const limitMin = useRef(0);
-    const limitMax = useRef(0);
+    const [apiPrice, setApiPrice]       = useState<[number, number] | null>(null);
+    const limitMin   = useRef(0);
+    const limitMax   = useRef(0);
     const debounceRef = useRef<ReturnType<typeof setTimeout>>();
+    const bookGridRef = useRef<HTMLElement>(null);
 
     const [openSections, setOpenSections] = useState<Record<SectionKey, boolean>>({
-        authors: true,
-        language: true,
-        coverType: true,
-        price: true,
+        authors: true, language: true, coverType: true, price: true,
     });
 
-    // Fetch filter options once per slug
+    // ── Fetch filter options whenever the slug changes ──────────────────────
     useEffect(() => {
         if (!slug) return;
         setFilterOptions(null);
@@ -51,6 +71,7 @@ function CategoryPage() {
         setSelectedLanguages([]);
         setSelectedCoverTypes([]);
         setApiPrice(null);
+        setCurrentPage(1);
 
         getCategoryFilters(slug).then((data: CategoryFilterOptions) => {
             setFilterOptions(data);
@@ -61,29 +82,35 @@ function CategoryPage() {
         }).catch(() => {});
     }, [slug]);
 
-    // Fetch books whenever slug or any filter changes
+    // ── Fetch books whenever slug, filters, or page changes ─────────────────
     useEffect(() => {
         if (!slug) return;
         setIsLoading(true);
         setErrorCode(null);
 
-        getAllByGenre(slug, {
-            authors: selectedAuthors,
-            languages: selectedLanguages,
-            cover_types: selectedCoverTypes,
-            min_price: apiPrice ? apiPrice[0] : undefined,
-            max_price: apiPrice ? apiPrice[1] : undefined,
-        }).then((data: Book[]) => {
-            setBookList(data);
+        getAllByGenre(
+            slug,
+            {
+                authors:     selectedAuthors,
+                languages:   selectedLanguages,
+                cover_types: selectedCoverTypes,
+                min_price:   apiPrice ? apiPrice[0] : undefined,
+                max_price:   apiPrice ? apiPrice[1] : undefined,
+            },
+            currentPage,
+        ).then((data: PaginatedResponse<Book>) => {
+            setBookList(data.results);
+            setTotalCount(data.count);
             setIsLoading(false);
+            // Scroll the grid into view after a page change
+            bookGridRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }).catch((error: unknown) => {
-            if (isAxiosError(error)) {
-                setErrorCode(error.response?.status ?? null);
-            }
+            if (isAxiosError(error)) setErrorCode(error.response?.status ?? null);
             setIsLoading(false);
         });
-    }, [slug, selectedAuthors, selectedLanguages, selectedCoverTypes, apiPrice]);
+    }, [slug, selectedAuthors, selectedLanguages, selectedCoverTypes, apiPrice, currentPage]);
 
+    // ── Helpers ─────────────────────────────────────────────────────────────
     function toggleItem(arr: string[], item: string): string[] {
         return arr.includes(item) ? arr.filter(x => x !== item) : [...arr, item];
     }
@@ -94,22 +121,31 @@ function CategoryPage() {
 
     function handlePriceChange(min: number, max: number) {
         setPriceSlider([min, max]);
+        setCurrentPage(1); // reset page immediately so the debounced fetch lands on p.1
         clearTimeout(debounceRef.current);
         debounceRef.current = setTimeout(() => setApiPrice([min, max]), 400);
     }
 
-    if (errorCode === 404) return <h1>Ви намагаєтесь потрапити кудись не туди</h1>;
-    if (errorCode === 500) return <h1>На сервері сталася помилка</h1>;
+    function goToPage(page: number) {
+        if (page === currentPage) return;
+        setCurrentPage(page);
+    }
 
+    // ── Derived values ───────────────────────────────────────────────────────
+    const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+    const pageItems  = buildPageItems(currentPage, totalPages);
+
+    const lMin     = limitMin.current;
+    const lMax     = limitMax.current;
+    const hasRange = lMax > lMin;
+    const fillLeft  = hasRange ? `${((priceSlider[0] - lMin) / (lMax - lMin)) * 100}%` : '0%';
+    const fillRight = hasRange ? `${((lMax - priceSlider[1]) / (lMax - lMin)) * 100}%` : '0%';
     const categoryTitle = filterOptions?.genre_name.toUpperCase()
         ?? slug?.replace(/-/g, ' ').toUpperCase()
         ?? '';
 
-    const lMin = limitMin.current;
-    const lMax = limitMax.current;
-    const hasRange = lMax > lMin;
-    const fillLeft = hasRange ? `${((priceSlider[0] - lMin) / (lMax - lMin)) * 100}%` : '0%';
-    const fillRight = hasRange ? `${((lMax - priceSlider[1]) / (lMax - lMin)) * 100}%` : '0%';
+    if (errorCode === 404) return <h1>Ви намагаєтесь потрапити кудись не туди</h1>;
+    if (errorCode === 500) return <h1>На сервері сталася помилка</h1>;
 
     return (
         <div className={styles.page}>
@@ -135,7 +171,10 @@ function CategoryPage() {
                                         <input
                                             type="checkbox"
                                             checked={selectedAuthors.includes(author)}
-                                            onChange={() => setSelectedAuthors(prev => toggleItem(prev, author))}
+                                            onChange={() => {
+                                                setSelectedAuthors(prev => toggleItem(prev, author));
+                                                setCurrentPage(1);
+                                            }}
                                         />
                                         <span>{author}</span>
                                     </label>
@@ -157,7 +196,10 @@ function CategoryPage() {
                                         <input
                                             type="checkbox"
                                             checked={selectedLanguages.includes(lang)}
-                                            onChange={() => setSelectedLanguages(prev => toggleItem(prev, lang))}
+                                            onChange={() => {
+                                                setSelectedLanguages(prev => toggleItem(prev, lang));
+                                                setCurrentPage(1);
+                                            }}
                                         />
                                         <span>{lang}</span>
                                     </label>
@@ -179,7 +221,10 @@ function CategoryPage() {
                                         <input
                                             type="checkbox"
                                             checked={selectedCoverTypes.includes(ct)}
-                                            onChange={() => setSelectedCoverTypes(prev => toggleItem(prev, ct))}
+                                            onChange={() => {
+                                                setSelectedCoverTypes(prev => toggleItem(prev, ct));
+                                                setCurrentPage(1);
+                                            }}
                                         />
                                         <span>{ct}</span>
                                     </label>
@@ -233,7 +278,7 @@ function CategoryPage() {
                 </aside>
 
                 {/* ── Book grid ── */}
-                <main className={styles.bookGrid}>
+                <main className={styles.bookGrid} ref={bookGridRef}>
                     {isLoading ? (
                         <p className={styles.statusMessage}>Завантаження...</p>
                     ) : bookList.length === 0 ? (
@@ -243,6 +288,33 @@ function CategoryPage() {
                     )}
                 </main>
             </div>
+
+            {/* ── Pagination bar ── */}
+            {!isLoading && totalPages > 1 && (
+                <div className={styles.paginationWrapper}>
+                    <nav className={styles.paginationBar} aria-label="Pagination">
+                        {pageItems.map((item, idx) =>
+                            item === '...' ? (
+                                <span
+                                    key={`ellipsis-${idx}`}
+                                    className={`${styles.pageBtn} ${styles.pageBtnEllipsis}`}
+                                >
+                                    …
+                                </span>
+                            ) : (
+                                <button
+                                    key={item}
+                                    className={`${styles.pageBtn} ${item === currentPage ? styles.pageBtnActive : ''}`}
+                                    onClick={() => goToPage(item)}
+                                    aria-current={item === currentPage ? 'page' : undefined}
+                                >
+                                    {item}
+                                </button>
+                            )
+                        )}
+                    </nav>
+                </div>
+            )}
         </div>
     );
 }

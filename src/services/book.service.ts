@@ -34,13 +34,21 @@ export interface BookFilters {
     max_price?: number;
 }
 
-function getAllByGenre(slug: string | undefined, filters?: BookFilters){
+export interface PaginatedResponse<T> {
+    count: number;
+    next: string | null;
+    previous: string | null;
+    results: T[];
+}
+
+function getAllByGenre(slug: string | undefined, filters?: BookFilters, page?: number){
     const params = new URLSearchParams();
     filters?.authors?.forEach(a => params.append('authors', a));
     filters?.languages?.forEach(l => params.append('language', l));
     filters?.cover_types?.forEach(ct => params.append('cover_type', ct));
     if (filters?.min_price !== undefined) params.append('min_price', String(filters.min_price));
     if (filters?.max_price !== undefined) params.append('max_price', String(filters.max_price));
+    if (page !== undefined && page > 1) params.append('page', String(page));
 
     return(
         instance({
@@ -48,7 +56,20 @@ function getAllByGenre(slug: string | undefined, filters?: BookFilters){
             params,
             method: 'get'
         }).then((response) => {
-            return response['data']
+            const raw = response.data;
+            // Normalise: the backend may return a paginated envelope
+            // { count, next, previous, results } OR (if pagination middleware
+            // hasn't reloaded yet) the legacy flat array.  Always produce a
+            // PaginatedResponse so callers never receive undefined.results.
+            if (Array.isArray(raw)) {
+                return {
+                    count: raw.length,
+                    next: null,
+                    previous: null,
+                    results: raw,
+                } as PaginatedResponse<import('../models/book').Book>;
+            }
+            return raw as PaginatedResponse<import('../models/book').Book>;
         })
     )
 }

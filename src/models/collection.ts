@@ -5,6 +5,7 @@ export interface CollectionBook extends Book {}
 export interface Collection {
     id: number;
     name: string;
+    slug: string;
     books: CollectionBook[];
 }
 

@@ -19,6 +19,12 @@ export const ENDPOINTS = {
         CATEGORY_FILTERS: (slug: string | undefined) => `/books/category/${slug}/filters/`,
         PARSE: '/books/parse/'
     },
+    COLLECTIONS: {
+        LIST: '/books/collections/',
+        DETAIL: (id: number) => `/books/collections/${id}/`,
+        BY_SLUG: (slug: string | undefined) => `/books/collections/${slug}/`,
+        FILTERS: (slug: string | undefined) => `/books/collections/${slug}/filters/`,
+    },
     CART: {
         VIEW: '/cart/view/',
         ADD: '/cart/add/',

@@ -1,6 +1,6 @@
 export const API_CONFIG = {
     BASE_URL: 'http://localhost:8000/', // Или из env
-    TIMEOUT: 1000,
+    TIMEOUT: 15000,
 };
 
 export const ENDPOINTS = {

@@ -1,6 +1,8 @@
 import instance from "./httpClient.ts";
 import type { Book } from "../models/book.ts";
-import type {BookCollectionBody, Collection} from "../models/collection.ts";
+import type {BookCollectionBody, Collection, CollectionBook} from "../models/collection.ts";
+
+export type { Collection, CollectionBook };
 
 
 
@@ -34,4 +36,19 @@ function removeBookFromCollection(data: BookCollectionBody): Promise<void> {
     }).then((response) => response.data);
 }
 
-export { getCollections, getAllBooks, addBookToCollection, removeBookFromCollection };
+function createCollection(name: string): Promise<Collection> {
+    return instance({
+        url: '/books/collections/',
+        method: 'post',
+        data: { name },
+    }).then((response) => response.data);
+}
+
+function deleteCollection(id: number): Promise<void> {
+    return instance({
+        url: `/books/collections/${id}/`,
+        method: 'delete',
+    }).then((response) => response.data);
+}
+
+export { getCollections, getAllBooks, addBookToCollection, removeBookFromCollection, createCollection, deleteCollection };

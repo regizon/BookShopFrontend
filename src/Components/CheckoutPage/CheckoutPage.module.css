@@ -146,3 +146,15 @@ hr {
 .capitalLetters input {
     text-transform: capitalize
 }
+
+.fieldGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.fieldError {
+    color: red;
+    font-size: 12px;
+    margin: 0;
+}

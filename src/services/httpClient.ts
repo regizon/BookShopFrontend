@@ -1,4 +1,4 @@
-import axios, {isAxiosError} from 'axios';
+import axios from 'axios';
 import {obtainNewAccessCode, clearAuth} from "./auth.service.ts";
 import type {RefreshItem} from "../models/auth.ts";
 import {API_CONFIG} from "./api.constants.ts";
@@ -50,21 +50,21 @@ instance.interceptors.response.use(
                 isRefreshing = false;
                 return instance(original_request);
             } catch (e) {
-                if (isAxiosError(e)) {
-                    refreshQueue.forEach((item) => item.reject(e));
-                }
+                // Bug fix: always reject queued promises — obtainNewAccessCode wraps errors
+                // in plain Error objects, so isAxiosError(e) would always be false here.
+                refreshQueue.forEach((item) => item.reject(e as never));
+                refreshQueue = [];
                 isRefreshing = false;
                 clearAuth();
+                window.location.replace('/');
                 return Promise.reject(e);
             }
         }
 
-        if (
-            error.response?.status === 401 &&
-            original_request._retry &&
-            url.includes('/auth/token/refresh')
-        ) {
+        // Retried request also got 401 — refresh token is gone; bail out.
+        if (error.response?.status === 401 && original_request._retry) {
             clearAuth();
+            window.location.replace('/');
         }
 
         return Promise.reject(error);

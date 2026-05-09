@@ -1,6 +1,6 @@
 import type { Book } from './book.ts';
 
-export interface CollectionBook extends Book {}
+export type CollectionBook = Book;
 
 export interface Collection {
     id: number;

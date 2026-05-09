@@ -52,8 +52,8 @@ function CollectionPage() {
 
     const [priceSlider, setPriceSlider] = useState<[number, number]>([0, 0]);
     const [apiPrice, setApiPrice]       = useState<[number, number] | null>(null);
-    const limitMin    = useRef(0);
-    const limitMax    = useRef(0);
+    const [limitMin, setLimitMin] = useState(0);
+    const [limitMax, setLimitMax] = useState(0);
     const debounceRef = useRef<ReturnType<typeof setTimeout>>();
     const bookGridRef = useRef<HTMLElement>(null);
 
@@ -63,17 +63,19 @@ function CollectionPage() {
 
     useEffect(() => {
         if (!slug) return;
+        /* eslint-disable react-hooks/set-state-in-effect */
         setFilterOptions(null);
         setSelectedAuthors([]);
         setSelectedLanguages([]);
         setSelectedCoverTypes([]);
         setApiPrice(null);
         setCurrentPage(1);
+        /* eslint-enable react-hooks/set-state-in-effect */
 
         getCollectionFilters(slug).then((data: CollectionFilterOptions) => {
             setFilterOptions(data);
-            limitMin.current = data.min_price;
-            limitMax.current = data.max_price;
+            setLimitMin(data.min_price);
+            setLimitMax(data.max_price);
             setPriceSlider([data.min_price, data.max_price]);
             setApiPrice([data.min_price, data.max_price]);
         }).catch(() => {});
@@ -81,8 +83,10 @@ function CollectionPage() {
 
     useEffect(() => {
         if (!slug) return;
+        /* eslint-disable react-hooks/set-state-in-effect */
         setIsLoading(true);
         setErrorCode(null);
+        /* eslint-enable react-hooks/set-state-in-effect */
 
         getAllByCollection(
             slug,
@@ -128,8 +132,8 @@ function CollectionPage() {
     const totalPages = Math.ceil(totalCount / PAGE_SIZE);
     const pageItems  = buildPageItems(currentPage, totalPages);
 
-    const lMin     = limitMin.current;
-    const lMax     = limitMax.current;
+    const lMin     = limitMin;
+    const lMax     = limitMax;
     const hasRange = lMax > lMin;
     const fillLeft  = hasRange ? `${((priceSlider[0] - lMin) / (lMax - lMin)) * 100}%` : '0%';
     const fillRight = hasRange ? `${((lMax - priceSlider[1]) / (lMax - lMin)) * 100}%` : '0%';

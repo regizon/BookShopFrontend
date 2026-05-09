@@ -23,7 +23,6 @@ function BookCollectionManager() {
     const [createError, setCreateError] = useState<string | null>(null);
 
     useEffect(() => {
-        setLoading(true);
         Promise.all([getCollections(), getAllBooks()])
             .then(([collectionsData, booksData]) => {
                 setCollections(collectionsData);

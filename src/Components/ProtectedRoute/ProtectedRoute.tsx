@@ -1,5 +1,5 @@
 import {useAuth} from "../../Contexts/AuthContext.ts";
-import { Navigate, Outlet, useLocation, useNavigate } from "react-router"
+import { Navigate, Outlet, useLocation } from "react-router"
 import {useModal} from "../../Contexts/ModalContext.ts";
 import {useEffect} from "react";
 
@@ -15,6 +15,7 @@ function ProtectedRoute() {
             openModal("login")
         }
         resetLogout()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAuthenticated])
 
     if(!isAuthenticated){

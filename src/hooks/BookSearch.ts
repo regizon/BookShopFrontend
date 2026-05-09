@@ -16,6 +16,7 @@ export function useBookSearch(value:string, timeout:number) {
                 clearTimeout(getBooks)
             }
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[value])
 
     return response

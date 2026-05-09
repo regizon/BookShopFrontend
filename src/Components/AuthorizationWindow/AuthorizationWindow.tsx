@@ -16,7 +16,7 @@ interface AuthorizatonWindowsProps {
 
 
 function AuthorizationWindow({initialStep}: AuthorizatonWindowsProps){
-    const {login, pendingRoot, isStaff} = useAuth();
+    const {login, pendingRoot} = useAuth();
     const navigate = useNavigate();
 
     const [userName, setUserName] = useState<string | null>(null);

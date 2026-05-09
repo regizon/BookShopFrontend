@@ -1,6 +1,5 @@
 import styles from "./Header.module.css"
 import logo from '/src/assets/logo.png'
-import heart from '/src/assets/heart.png'
 import profile from '/src/assets/profile.png'
 import cart from '/src/assets/shopping-cart.png'
 import {Link, useLocation} from "react-router";
@@ -42,17 +41,17 @@ function Header() {
         document.addEventListener('mousedown',closeSearchMenu)
 
         return() => document.removeEventListener('mousedown',closeSearchMenu)
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [openSearchMenu])
 
     useEffect(() => {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
         setOpenSearchMenu(false)
     }, [location.pathname])
 
     useEffect(() => {
         document.addEventListener('mousedown', closeGenresMenu)
         return() => document.removeEventListener('mousedown',closeGenresMenu)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [openGenresMenu])
 
     return (

@@ -1,6 +1,7 @@
 import styles from "./CheckoutPage.module.css"
 import {useCart} from "../../Contexts/CartContext.ts";
 import {useEffect, useState} from "react";
+import {isAxiosError} from "axios";
 import CartItem from "../Cartitem/CartItem.tsx";
 import {Navigate, useNavigate} from "react-router";
 import {createOrder} from "../../services/order.service.ts";
@@ -18,7 +19,6 @@ function CheckoutPage() {
     const [street, setStreet] = useState<string>("");
     const [house, setHouse] = useState<string>("");
     const [apartment, setApartment] = useState<string>("");
-    const [userError, setUserError] = useState<string | null>(null);
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [deliveryMethod, setDeliveryMethod] = useState<AvailableDelivery | null>(null);
     const [paymentMethod, setPaymentMethod] = useState<AvailablePaymentMethods | null>(null);
@@ -109,12 +109,10 @@ function CheckoutPage() {
                 alert("Успешно создано");
                 navigate("/", {replace: true});
             }
-        } catch (error: any) {
-            let errorMessage = "Сталася невідома помилка";
-            if (error.response && error.response.data) {
-                errorMessage = error.response.data;
-            }
-            setUserError(errorMessage);
+        } catch (error: unknown) {
+            const errorMessage = isAxiosError(error) && error.response?.data
+                ? String(error.response.data)
+                : "Сталася невідома помилка";
             alert(errorMessage);
         }
     }
@@ -123,6 +121,7 @@ function CheckoutPage() {
 
     useEffect(() => {
         fetchCart();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const totalPrice = items.reduce((sum, item) => {

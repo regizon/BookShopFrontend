@@ -55,6 +55,7 @@ function AddBookPage() {
            setAllGenres([...allGenres, ...genres])
         }
         fetchGenres()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     async function getBook(title: string, author: string, publisher: string){
@@ -106,6 +107,7 @@ function AddBookPage() {
     useEffect(() => {
         document.addEventListener('mousedown', closeGenresMenu)
         return() => document.removeEventListener('mousedown',closeGenresMenu)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [openGenres])
 
     const handleSearchFormChange = (event: ChangeEvent<HTMLInputElement>) =>{

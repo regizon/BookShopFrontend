@@ -11,6 +11,7 @@ import CheckoutPage from "./Components/CheckoutPage/CheckoutPage.tsx";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute.tsx";
 import ProfilePage from "./Components/ProfilePage/ProfilePage.tsx";
 import CategoryPage from "./Components/CategoryPage/CategoryPage.tsx";
+import CollectionPage from "./Components/CollectionPage/CollectionPage.tsx";
 import ProfileSettings from "./Components/ProfileSettings/ProfileSettings.tsx";
 import OrdersPage from "./Components/OrdersPage/OrdersPage.tsx";
 import AdminRoute from "./Components/AdminRoute/AdminRoute.tsx";
@@ -31,6 +32,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                           </Route>
                           <Route path="books/:bookId" element={<BookPage />} />
                           <Route path="books/category/:slug" element={<CategoryPage />}/>
+                          <Route path="collections/:slug" element={<CollectionPage />}/>
                       </Route>
                   <Route element={<ProtectedRoute />}>
                       <Route element={<ProfilePage />}>
@@ -42,7 +44,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                                       <Route path={"admin/collections/add/"} element={<BookCollectionManager />} />
                                   </Route>
                       </Route>
-                  </Route>.
+                  </Route>
               </Routes>
             </BrowserRouter>
           </CartProvider>

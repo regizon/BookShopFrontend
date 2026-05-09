@@ -60,7 +60,14 @@ function CartItem({item}: CartItemProps) {
                     </button>
                 </div>
                 <div className={styles.price}>
-                    <span>{item.book.price} ₴</span>
+                    {item.book.discount_price != null ? (
+                        <>
+                            <span className={styles.priceOriginal}>{item.book.price} ₴</span>
+                            <span>{item.price} ₴</span>
+                        </>
+                    ) : (
+                        <span>{item.price} ₴</span>
+                    )}
                 </div>
             </div>
         </div>

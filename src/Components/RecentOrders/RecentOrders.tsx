@@ -63,7 +63,7 @@ function RecentOrders(){
                     ))}
                 </tbody>
             </table>
-            <button>Переглянути всі замовлення</button>
+            <button onClick={() => {navigate("/orders/")}}>Переглянути всі замовлення</button>
         </div>
     )
     }

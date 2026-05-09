@@ -21,7 +21,14 @@ function BookCard({ book }:BookCardProps) {
                 </Link>
                 <Link to= {`/books/${book.id}`} className={styles.bookTitle}>{book.title}</Link>
                 <span className={styles.authorName}>{book.author_read}</span>
-                <span className={styles.price}>{book.price} ₴</span>
+                {book.discount_price != null ? (
+                    <div className={styles.priceBlock}>
+                        <span className={styles.priceOriginal}>{book.price} ₴</span>
+                        <span className={styles.priceDiscount}>{book.discount_price} ₴</span>
+                    </div>
+                ) : (
+                    <span className={styles.price}>{book.price} ₴</span>
+                )}
                 <AddToCartButton bookId={book.id}/>
             </div>
         )

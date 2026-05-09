@@ -3,14 +3,14 @@ import { useEffect, useState, useRef } from "react";
 import type { Book } from "../../models/book.ts";
 import type { PaginatedResponse } from "../../services/book.service.ts";
 import { isAxiosError } from "axios";
-import { getAllByGenre, getCategoryFilters } from "../../services/book.service.ts";
+import { getAllByCollection, getCollectionFilters } from "../../services/bookCollection.service.ts";
 import BookCard from "../BookCard/BookCard.tsx";
-import styles from "./CategoryPage.module.css";
+import styles from "./CollectionPage.module.css";
 
 const PAGE_SIZE = 12;
 
-interface CategoryFilterOptions {
-    genre_name: string;
+interface CollectionFilterOptions {
+    collection_name: string;
     authors: string[];
     languages: string[];
     cover_types: string[];
@@ -36,7 +36,7 @@ function buildPageItems(current: number, total: number): (number | '...')[] {
     return items;
 }
 
-function CategoryPage() {
+function CollectionPage() {
     const { slug } = useParams<{ slug: string }>();
 
     const [isLoading, setIsLoading] = useState(true);
@@ -45,15 +45,15 @@ function CategoryPage() {
     const [totalCount, setTotalCount] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
 
-    const [filterOptions, setFilterOptions] = useState<CategoryFilterOptions | null>(null);
+    const [filterOptions, setFilterOptions] = useState<CollectionFilterOptions | null>(null);
     const [selectedAuthors, setSelectedAuthors] = useState<string[]>([]);
     const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
     const [selectedCoverTypes, setSelectedCoverTypes] = useState<string[]>([]);
 
     const [priceSlider, setPriceSlider] = useState<[number, number]>([0, 0]);
     const [apiPrice, setApiPrice]       = useState<[number, number] | null>(null);
-    const limitMin   = useRef(0);
-    const limitMax   = useRef(0);
+    const limitMin    = useRef(0);
+    const limitMax    = useRef(0);
     const debounceRef = useRef<ReturnType<typeof setTimeout>>();
     const bookGridRef = useRef<HTMLElement>(null);
 
@@ -70,7 +70,7 @@ function CategoryPage() {
         setApiPrice(null);
         setCurrentPage(1);
 
-        getCategoryFilters(slug).then((data: CategoryFilterOptions) => {
+        getCollectionFilters(slug).then((data: CollectionFilterOptions) => {
             setFilterOptions(data);
             limitMin.current = data.min_price;
             limitMax.current = data.max_price;
@@ -84,7 +84,7 @@ function CategoryPage() {
         setIsLoading(true);
         setErrorCode(null);
 
-        getAllByGenre(
+        getAllByCollection(
             slug,
             {
                 authors:     selectedAuthors,
@@ -133,7 +133,7 @@ function CategoryPage() {
     const hasRange = lMax > lMin;
     const fillLeft  = hasRange ? `${((priceSlider[0] - lMin) / (lMax - lMin)) * 100}%` : '0%';
     const fillRight = hasRange ? `${((lMax - priceSlider[1]) / (lMax - lMin)) * 100}%` : '0%';
-    const categoryTitle = filterOptions?.genre_name.toUpperCase()
+    const collectionTitle = filterOptions?.collection_name.toUpperCase()
         ?? slug?.replace(/-/g, ' ').toUpperCase()
         ?? '';
 
@@ -143,7 +143,7 @@ function CategoryPage() {
     return (
         <div className={styles.page}>
             <div className={styles.pageHeader}>
-                <h1 className={styles.categoryTitle}>{categoryTitle}</h1>
+                <h1 className={styles.categoryTitle}>{collectionTitle}</h1>
             </div>
 
             <div className={styles.layout}>
@@ -269,7 +269,7 @@ function CategoryPage() {
                     {isLoading ? (
                         <p className={styles.statusMessage}>Завантаження...</p>
                     ) : bookList.length === 0 ? (
-                        <p className={styles.statusMessage}>Отакої, в нас ще немає книг цього жанру</p>
+                        <p className={styles.statusMessage}>Отакої, в цій колекції ще немає книг</p>
                     ) : (
                         bookList.map(book => <BookCard key={book.id} book={book} />)
                     )}
@@ -305,4 +305,4 @@ function CategoryPage() {
     );
 }
 
-export default CategoryPage;
+export default CollectionPage;

@@ -11,10 +11,12 @@ import {useBookSearch} from "../../hooks/BookSearch.ts";
 import {type SetStateAction, useEffect, useRef, useState} from "react";
 import SearchResults from "../SearchResults/SearchResults.tsx";
 import GenresMenu from "../GenresMenu/GenresMenu.tsx";
+import {useCart} from "../../Contexts/CartContext.ts";
 
 function Header() {
     const {openModal} = useModal();
     const {resetLogout, isStaff} = useAuth()
+    const {items} = useCart()
     const navigate = useNavigate();
     const [searchInput, setSearchInput] = useState("");
     const [openSearchMenu, setOpenSearchMenu] = useState<boolean>();
@@ -82,7 +84,7 @@ function Header() {
                 <input onChange={(event: { target: { value: SetStateAction<string> } }) => {
                     setSearchInput(event.target.value);
                     setOpenSearchMenu(true)
-                }} placeholder={"Пошук книг, авторів, жанрів..."}/>
+                }} placeholder={"Уведіть назву книги"}/>
               {foundBooks.length > 0 && openSearchMenu &&
                   <SearchResults bookList={foundBooks} />
               }
@@ -93,8 +95,10 @@ function Header() {
                   navigate(isStaff ? "/admin/orders/" : "/profile/")
               }}/>
 
-              <img src={heart} alt="favorites"/>
-              <img className={styles.clickableIcon} src={cart} alt="cart" onClick={() => {openModal('cart')}}/>
+              <div className={styles.cartWrapper}>
+                  <img className={styles.clickableIcon} src={cart} alt="cart" onClick={() => {openModal('cart')}}/>
+                  {items.length > 0 && <span className={styles.cartBadge}>{items.length}</span>}
+              </div>
           </div>
         </div>
       </header>

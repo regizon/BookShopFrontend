@@ -47,6 +47,23 @@
     color: darkred;
 }
 
+.priceBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.priceOriginal {
+    color: gray;
+    text-decoration: line-through;
+    font-size: 12px;
+}
+
+.priceDiscount {
+    color: darkred;
+    font-weight: 700;
+}
+
 .unavailable {
     opacity: 0.5;
     filter: grayscale(100%);

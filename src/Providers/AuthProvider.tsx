@@ -20,7 +20,9 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     const [isLogout, setIsLogout] = useState<boolean>(false);
 
     async function isAdmin() {
-        setIsStaff(await checkAdmin())
+        const adminStatus = await checkAdmin()
+        setIsStaff(adminStatus)
+        return adminStatus
     }
 
     useEffect(() => {
@@ -31,22 +33,24 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
         setPendingRoot(root);
     }
 
-    function login(accessToken: string, refreshToken: string) {
+    async function login(accessToken: string, refreshToken: string) {
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
         setIsAuthenticated(true);
-        isAdmin();
-        if(pendingRoot){
-            return(
-                <Navigate to={pendingRoot} replace />
-            )
-        }
+        //await isAdmin();
+        // if(pendingRoot){
+        //     return(
+        //         <Navigate to={pendingRoot} replace />
+        //     )
+        // }
+        return await isAdmin()
     }
 
     function logout() {
         localStorage.clear()
         setIsLogout(true)
         setIsAuthenticated(false)
+        setIsStaff(false)
         return(
             <Navigate to="" replace/>
         )

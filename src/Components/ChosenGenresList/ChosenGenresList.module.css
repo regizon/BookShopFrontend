@@ -6,3 +6,12 @@
     align-items: center;
     gap: 5px;
 }
+
+.genreTagLink {
+    color: inherit;
+    text-decoration: none;
+}
+
+.genreTagLink:hover {
+    text-decoration: underline;
+}

@@ -217,7 +217,7 @@ function AddBookPage() {
                                 className={`${styles.genresContainer} ${openGenres ? styles.genresContainerOpen : ''}`}
                                 onClick={() => setOpenGenres(!openGenres)}
                             >
-                                <ChosenGenresList chosen={addBookForm.genres} variants={allGenres} onGenreRemove={removeGenre} />
+                                <ChosenGenresList chosen={addBookForm.genres} variants={allGenres} isEditing={true} onRemove={removeGenre} />
                                 {openGenres && <AdminGenresList variants={allGenres} onGenreClick={addGenre} />}
                             </div>
                         </div>

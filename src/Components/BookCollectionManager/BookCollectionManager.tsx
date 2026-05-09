@@ -5,6 +5,8 @@ import {
     getAllBooks,
     addBookToCollection,
     removeBookFromCollection,
+    createCollection,
+    deleteCollection,
 } from '../../services/bookCollection.service.ts';
 import type { Collection, CollectionBook } from '../../services/bookCollection.service.ts';
 import type { Book } from '../../models/book.ts';
@@ -17,6 +19,8 @@ function BookCollectionManager() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [actionError, setActionError] = useState<string | null>(null);
+    const [newCollectionName, setNewCollectionName] = useState('');
+    const [createError, setCreateError] = useState<string | null>(null);
 
     useEffect(() => {
         setLoading(true);
@@ -79,6 +83,36 @@ function BookCollectionManager() {
             .catch(() => setActionError('Не вдалося видалити книгу'));
     }
 
+    function handleCreateCollection() {
+        const name = newCollectionName.trim();
+        if (!name) return;
+        createCollection(name)
+            .then((created) => {
+                setCollections((prev) => {
+                    setActiveTab(prev.length);
+                    return [...prev, created];
+                });
+                setSelectedBook((prev) => ({ ...prev, [created.id]: '' }));
+                setNewCollectionName('');
+                setCreateError(null);
+            })
+            .catch(() => setCreateError('Не вдалося створити колекцію'));
+    }
+
+    function handleDeleteCollection(collectionId: number, index: number) {
+        deleteCollection(collectionId)
+            .then(() => {
+                setCollections((prev) => prev.filter((c) => c.id !== collectionId));
+                setActiveTab((prev) => {
+                    if (index < prev) return prev - 1;
+                    if (index === prev) return Math.max(0, prev - 1);
+                    return prev;
+                });
+                setActionError(null);
+            })
+            .catch(() => setActionError('Не вдалося видалити колекцію'));
+    }
+
     function getAuthor(author: string | string[]): string {
         return Array.isArray(author) ? author.join(', ') : author;
     }
@@ -106,15 +140,42 @@ function BookCollectionManager() {
         <div className={styles.content}>
             <h1 className={styles.caption}>Управління колекціями</h1>
 
+            <div className={styles.createRow}>
+                <input
+                    className={styles.createInput}
+                    type="text"
+                    placeholder="Назва нової колекції"
+                    value={newCollectionName}
+                    onChange={(e) => setNewCollectionName(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && handleCreateCollection()}
+                />
+                <button
+                    className={styles.addButton}
+                    onClick={handleCreateCollection}
+                    disabled={!newCollectionName.trim()}
+                >
+                    Нова колекція
+                </button>
+            </div>
+            {createError && <p className={styles.errorMessage}>{createError}</p>}
+
             <div className={styles.tabs}>
                 {collections.map((collection, index) => (
-                    <button
-                        key={collection.id}
-                        className={`${styles.tab} ${activeTab === index ? styles.tabActive : ''}`}
-                        onClick={() => setActiveTab(index)}
-                    >
-                        {collection.name}
-                    </button>
+                    <div key={collection.id} className={styles.tabWrapper}>
+                        <button
+                            className={`${styles.tab} ${activeTab === index ? styles.tabActive : ''}`}
+                            onClick={() => setActiveTab(index)}
+                        >
+                            {collection.name}
+                        </button>
+                        <button
+                            className={styles.tabDeleteBtn}
+                            onClick={() => handleDeleteCollection(collection.id, index)}
+                            title="Видалити колекцію"
+                        >
+                            ×
+                        </button>
+                    </div>
                 ))}
             </div>
 

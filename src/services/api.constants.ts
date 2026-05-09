@@ -1,6 +1,6 @@
 export const API_CONFIG = {
     BASE_URL: 'http://localhost:8000/', // Или из env
-    TIMEOUT: 1000,
+    TIMEOUT: 15000,
 };
 
 export const ENDPOINTS = {
@@ -13,10 +13,17 @@ export const ENDPOINTS = {
     },
     BOOKS: {
         LIST: '/books/',
-        DETAIL: (id: string | undefined) => `/books/${id}`,
-        GENRES: '/books/genres',
-        CATEGORY_LIST: (slug: string | undefined) => `/books/category/${slug}`,
+        DETAIL: (id: string | undefined) => `/books/${id}/`,
+        GENRES: '/books/genres/',
+        CATEGORY_LIST: (slug: string | undefined) => `/books/category/${slug}/`,
+        CATEGORY_FILTERS: (slug: string | undefined) => `/books/category/${slug}/filters/`,
         PARSE: '/books/parse/'
+    },
+    COLLECTIONS: {
+        LIST: '/books/collections/',
+        DETAIL: (id: number) => `/books/collections/${id}/`,
+        BY_SLUG: (slug: string | undefined) => `/books/collections/${slug}/`,
+        FILTERS: (slug: string | undefined) => `/books/collections/${slug}/filters/`,
     },
     CART: {
         VIEW: '/cart/view/',

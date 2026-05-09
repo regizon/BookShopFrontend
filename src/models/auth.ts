@@ -1,15 +1,12 @@
 import {AxiosError} from "axios";
 
-export interface AuthResponse {
-    tokens: {
-        refresh: string;
-        access: string;
-    }
+export interface MeResponse {
+    email: string;
+    is_staff: boolean;
 }
 
-
 export interface RefreshItem {
-    resolve: (token: string) => void;
+    resolve: () => void;
     reject: (error: AxiosError) => void;
 }
 

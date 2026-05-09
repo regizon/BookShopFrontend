@@ -74,23 +74,20 @@ function AuthorizationWindow({initialStep}: AuthorizatonWindowsProps){
     }
 
 
-    async function checkCode(email: string, code: string, native_name : string | null){
+    async function checkCode(email: string, code: string, native_name: string | null) {
         setUserError("")
         try {
-           const data = await verifyCode(email, code, native_name);
-           const {refresh, access} = data.tokens;
-           const userAdmin = await login(access, refresh)
+            await verifyCode(email, code, native_name);
+            const userAdmin = await login();
             closeModal()
-            console.log(userAdmin)
-            if(pendingRoot !== null && !userAdmin){
+            if (pendingRoot !== null && !userAdmin) {
                 navigate(pendingRoot)
-            }
-            else{
+            } else {
                 navigate('/admin/orders/')
             }
         } catch (error) {
             if (error instanceof Error)
-            setUserError(error.message)
+                setUserError(error.message)
         }
     }
 

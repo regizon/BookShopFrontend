@@ -100,7 +100,7 @@ function AuthorizationWindow({initialStep}: AuthorizatonWindowsProps){
     }
 
     if (status === "verification"){
-        content = <VerifyCodeWindow error={userError} verifyCode={checkCode} email={userEmail} native_name={userName}/>
+        content = <VerifyCodeWindow error={userError} verifyCode={checkCode} email={userEmail} native_name={userName} switchToRegistration={startRegistration}/>
     } else if (status === "registration"){
         content = <RegistrationForm error={userError} sendCode={requestRegisterCode} switchToLogin={startLogin} />
     }

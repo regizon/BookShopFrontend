@@ -7,9 +7,10 @@ interface VerifyFormProps {
     error: string | null;
     email: string;
     native_name: string | null;
+    switchToRegistration: () => void;
 }
 
-function CodeVerificationForm( {verifyCode, error, email, native_name} : VerifyFormProps) {
+function CodeVerificationForm( {verifyCode, error, email, native_name, switchToRegistration} : VerifyFormProps) {
 
 
     const [userCode, setUserCode] = useState<string>("");
@@ -27,7 +28,7 @@ function CodeVerificationForm( {verifyCode, error, email, native_name} : VerifyF
                 verifyCode(email, userCode, native_name)
             }}>УВІЙТИ
             </button>
-            <span>Немає акаунту? <a>Зареєструйтесь</a></span>
+            <span>Немає акаунту? <span onClick={switchToRegistration} className={CommonStyles.registrationLink}>Зареєструйтесь</span></span>
         </div>
     )
 }

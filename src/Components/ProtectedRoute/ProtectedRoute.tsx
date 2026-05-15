@@ -4,19 +4,25 @@ import {useModal} from "../../Contexts/ModalContext.ts";
 import {useEffect} from "react";
 
 function ProtectedRoute() {
-    const {isAuthenticated, handlePendingRoot, isLogout, resetLogout} = useAuth()
+    const {isAuthenticated, authChecked, handlePendingRoot, isLogout, resetLogout} = useAuth()
     const location = useLocation()
     const {openModal} = useModal()
     const currentRoot = location.pathname
 
     useEffect(() => {
+        // Wait until the initial /user/auth/me/ call has settled so we don't
+        // open the login modal or redirect during the brief loading window.
+        if (!authChecked) return;
         if(!isAuthenticated && !isLogout){
             handlePendingRoot(currentRoot)
             openModal("login")
         }
         resetLogout()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isAuthenticated])
+    }, [isAuthenticated, authChecked])
+
+    // Render nothing while the initial auth check is in flight.
+    if (!authChecked) return null;
 
     if(!isAuthenticated){
         return(<Navigate to={""} />)

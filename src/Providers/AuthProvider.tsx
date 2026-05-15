@@ -11,12 +11,16 @@ interface AuthProviderProps {
 
 const AuthProvider = ({children}: AuthProviderProps) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    // true once the initial /user/auth/me/ attempt (and any refresh) has settled.
+    // ProtectedRoute waits for this before deciding to redirect.
+    const [authChecked, setAuthChecked] = useState(false);
     const [pendingRoot, setPendingRoot] = useState<string | null>(null);
     const [isStaff, setIsStaff] = useState<boolean>(false);
     const [isLogout, setIsLogout] = useState<boolean>(false);
 
     // Bootstraps auth state by calling /user/auth/me/.
     // If the access cookie is expired the 401 interceptor silently refreshes it first.
+    // If refresh also fails the interceptor rejects and we land in catch — no reload.
     async function initAuth(): Promise<boolean> {
         try {
             const me = await getMe();
@@ -27,6 +31,8 @@ const AuthProvider = ({children}: AuthProviderProps) => {
             setIsAuthenticated(false);
             setIsStaff(false);
             return false;
+        } finally {
+            setAuthChecked(true);
         }
     }
 
@@ -37,6 +43,19 @@ const AuthProvider = ({children}: AuthProviderProps) => {
     useEffect(() => {
         // eslint-disable-next-line react-hooks/set-state-in-effect
         initAuth();
+    }, []);
+
+    // The httpClient interceptor dispatches this when a mid-session token refresh
+    // fails (e.g. refresh token expired while the user was active on the page).
+    // We clear React auth state here without a page reload.
+    useEffect(() => {
+        function handleSessionExpired() {
+            setIsAuthenticated(false);
+            setIsStaff(false);
+            setAuthChecked(true);
+        }
+        window.addEventListener('auth:session-expired', handleSessionExpired);
+        return () => window.removeEventListener('auth:session-expired', handleSessionExpired);
     }, []);
 
     function handlePendingRoot(root: string) {
@@ -72,6 +91,7 @@ const AuthProvider = ({children}: AuthProviderProps) => {
                 login,
                 logout,
                 isAuthenticated,
+                authChecked,
                 isStaff,
                 isAdmin,
                 handlePendingRoot,

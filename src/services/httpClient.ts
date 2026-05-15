@@ -15,7 +15,6 @@ const instance = axios.create({
     xsrfHeaderName: 'X-CSRFToken',
 })
 
-// No request interceptor needed — the access_token HttpOnly cookie is sent automatically.
 
 instance.interceptors.response.use(
     function onFulfilled(response) {
@@ -50,13 +49,14 @@ instance.interceptors.response.use(
                 isRefreshing = false;
                 return instance(original_request);
             } catch (e) {
-                // Bug fix: always reject queued promises — obtainNewAccessCode wraps errors
-                // in plain Error objects, so isAxiosError(e) would always be false here.
                 refreshQueue.forEach((item) => item.reject(e as never));
                 refreshQueue = [];
                 isRefreshing = false;
                 clearAuth();
-                window.location.replace('/');
+                // Signal AuthProvider to clear React state without a page reload.
+                // A full window.location.replace('/') here caused an infinite loop:
+                // reload → AuthProvider remounts → getMe() → 401 → reload → ∞
+                window.dispatchEvent(new CustomEvent('auth:session-expired'));
                 return Promise.reject(e);
             }
         }
@@ -64,7 +64,7 @@ instance.interceptors.response.use(
         // Retried request also got 401 — refresh token is gone; bail out.
         if (error.response?.status === 401 && original_request._retry) {
             clearAuth();
-            window.location.replace('/');
+            window.dispatchEvent(new CustomEvent('auth:session-expired'));
         }
 
         return Promise.reject(error);

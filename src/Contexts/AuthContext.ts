@@ -2,6 +2,7 @@ import {createContext, useContext} from "react";
 
 interface AuthContextType {
     isAuthenticated: boolean;
+    authChecked: boolean;
     isLogout: boolean;
     resetLogout: () => void;
     isAdmin: () => Promise<boolean>;

@@ -1,6 +1,5 @@
 import type {CartItemModel} from "../../models/cart.ts";
 import styles from "./CartItem.module.css";
-import heart from '/src/assets/heart.png'
 import delete_icon from '/src/assets/delete.png'
 import check from '/src/assets/check.png'
 import {useCart} from "../../Contexts/CartContext.ts";
@@ -52,8 +51,7 @@ function CartItem({item}: CartItemProps) {
             </div>
             <div className={styles.actions}>
                 <div className={styles.icons}>
-                    <img src={heart}/>
-                    <button className={styles.deleteButton} onClick={async () => {
+                        <button className={styles.deleteButton} onClick={async () => {
                         await deleteItemFromCart(item.id);
                     }}>
                         <img src={delete_icon} alt="delete"/>

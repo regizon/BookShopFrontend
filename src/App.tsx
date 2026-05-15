@@ -21,9 +21,11 @@ function App() {
 
     return (
         <div className={styles.app}>
-            {collections.map((collection) => (
-                <BookSection key={collection.id} collection={collection} />
-            ))}
+            {collections
+                .filter((collection) => collection.books.length > 0)
+                .map((collection) => (
+                    <BookSection key={collection.id} collection={collection} />
+                ))}
         </div>
     );
 }

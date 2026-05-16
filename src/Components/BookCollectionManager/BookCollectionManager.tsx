@@ -25,7 +25,7 @@ function BookCollectionManager() {
     useEffect(() => {
         Promise.all([getCollections(), getAllBooks()])
             .then(([collectionsData, booksData]) => {
-                setCollections(collectionsData);
+                setCollections(collectionsData.filter((c) => c.name !== 'Акції'));
                 setBooks(booksData);
                 const initial: Record<number, string> = {};
                 collectionsData.forEach((c) => { initial[c.id] = ''; });
@@ -38,7 +38,7 @@ function BookCollectionManager() {
     const activeCollection = collections[activeTab];
 
     const booksNotInCollection = activeCollection
-        ? books.filter((b) => !activeCollection.books.some((cb) => cb.id === b.id))
+        ? books.filter((b) => b.quantity > 0 && !activeCollection.books.some((cb) => cb.id === b.id))
         : [];
 
     function handleAdd(collectionId: number) {

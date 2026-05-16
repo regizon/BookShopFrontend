@@ -43,14 +43,15 @@ export default function OrderCard(order: OrderCardProps): JSX.Element {
                 <td>{order.item.id}</td>
                 <td>{date}</td>
                 <td className={styles.imageWrapper}>
-                    {books.length - 1 > 0 ?
-                        <div className={styles.coverWrapper}>
+                    {books.length > 0 && (
+                        books.length > 1 ?
+                            <div className={styles.coverWrapper}>
+                                <img src={books[0].item.cover}/>
+                                <span className={styles.quantity}>+ {books.length - 1}</span>
+                            </div>
+                            :
                             <img src={books[0].item.cover}/>
-                            <span className={styles.quantity}>+ {books.length - 1}</span>
-                        </div>
-                        :
-                        <img src={books[0].item.cover}/>
-                    }
+                    )}
                 </td>
                 <td>{order.item.total_price} грн.</td>
                 <td>{statusVariations[order.item.delivery_status]}</td>

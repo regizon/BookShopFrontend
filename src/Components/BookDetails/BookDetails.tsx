@@ -51,6 +51,7 @@ function BookDetails({book, isStaff, onSave, onDelete, editError, deleteError}: 
     const [isEditing, setIsEditing] = useState<boolean>(false)
     const [editForm, setEditForm] = useState<EditableFields>(bookToEditForm(book))
     const [isSaving, setIsSaving] = useState<boolean>(false)
+    const [discountPercent, setDiscountPercent] = useState<string>('')
     const [coverWidth, setCoverWidth] = useState<number>(0)
     const [editAuthors, setEditAuthors] = useState<string[]>([...book.author_read])
     const [editPublisher, setEditPublisher] = useState<string>(book.publisher_read)
@@ -115,6 +116,11 @@ function BookDetails({book, isStaff, onSave, onDelete, editError, deleteError}: 
         setEditPublisher(book.publisher_read)
         setNewAuthorInput('')
         setEditGenres(allGenres.filter(g => book.genres_read.includes(g.name)))
+        setDiscountPercent(
+            book.discount_price != null && book.price > 0
+                ? String(Math.round((1 - book.discount_price / book.price) * 100))
+                : ''
+        )
         setIsEditing(true)
     }
 
@@ -124,6 +130,7 @@ function BookDetails({book, isStaff, onSave, onDelete, editError, deleteError}: 
         setEditPublisher(book.publisher_read)
         setNewAuthorInput('')
         setEditGenres(allGenres.filter(g => book.genres_read.includes(g.name)))
+        setDiscountPercent('')
         setOpenGenres(false)
         setIsEditing(false)
     }
@@ -175,6 +182,25 @@ function BookDetails({book, isStaff, onSave, onDelete, editError, deleteError}: 
         } finally {
             setIsSaving(false)
         }
+    }
+
+    function handleDiscountPriceChange(raw: string) {
+        const disc = raw === '' ? null : Number(raw)
+        handleField('discount_price', disc)
+        if (disc !== null && editForm.price > 0) {
+            const pct = Math.round((1 - disc / editForm.price) * 100)
+            setDiscountPercent(pct >= 0 && pct <= 100 ? String(pct) : '')
+        } else {
+            setDiscountPercent('')
+        }
+    }
+
+    function handleDiscountPercentChange(raw: string) {
+        setDiscountPercent(raw)
+        const pct = Number(raw)
+        if (raw === '' || isNaN(pct) || pct < 0 || pct > 100) return
+        const calculated = pct === 0 ? null : Math.round(editForm.price * (1 - pct / 100))
+        handleField('discount_price', calculated)
     }
 
     function handleDeleteClick() {
@@ -462,17 +488,33 @@ function BookDetails({book, isStaff, onSave, onDelete, editError, deleteError}: 
                         <div className={styles.buyRow}>
                             <span className={styles.buyLabel}>Ціна зі знижкою</span>
                             {isEditing ? (
-                                <div className={styles.editPriceRow}>
-                                    <input
-                                        className={styles.editInput}
-                                        type="number"
-                                        min={0}
-                                        step={1}
-                                        placeholder="—"
-                                        value={editForm.discount_price ?? ''}
-                                        onChange={e => handleField('discount_price', e.target.value === '' ? null : Number(e.target.value))}
-                                    />
-                                    <span> грн</span>
+                                <div>
+                                    <div className={styles.editPriceRow}>
+                                        <input
+                                            className={styles.editInput}
+                                            type="number"
+                                            min={0}
+                                            step={1}
+                                            placeholder="—"
+                                            value={editForm.discount_price ?? ''}
+                                            onChange={e => handleDiscountPriceChange(e.target.value)}
+                                        />
+                                        <span> грн</span>
+                                    </div>
+                                    <div className={styles.editPercentRow}>
+                                        <span>знижка</span>
+                                        <input
+                                            className={`${styles.editInput} ${discountPercent !== '' && (Number(discountPercent) < 0 || Number(discountPercent) > 100) ? styles.inputError : ''}`}
+                                            type="number"
+                                            min={0}
+                                            max={100}
+                                            step={1}
+                                            placeholder="0"
+                                            value={discountPercent}
+                                            onChange={e => handleDiscountPercentChange(e.target.value)}
+                                        />
+                                        <span>%</span>
+                                    </div>
                                 </div>
                             ) : (
                                 <span className={`${styles.price} ${styles.buyPriceValue}`}>

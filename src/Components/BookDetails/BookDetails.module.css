@@ -231,6 +231,25 @@ td {
     width: 70px;
 }
 
+.editPercentRow {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    color: #555;
+    margin-top: 6px;
+}
+
+.editPercentRow input {
+    width: 55px;
+    font-size: 13px;
+}
+
+.inputError {
+    border-bottom-color: #d9534f !important;
+    background: #fff5f5 !important;
+}
+
 .coverInputWrapper {
     margin-top: 8px;
 }

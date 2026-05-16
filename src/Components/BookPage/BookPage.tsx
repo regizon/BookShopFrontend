@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from "react-router";
+import { useParams } from "react-router";
 import {useEffect, useState} from "react";
 import getDetails, {patchBook, deleteBook} from "../../services/bookDetails.service";
 import type {BookAllInfo, BookPatchPayload} from "../../models/book.ts";
@@ -14,7 +14,6 @@ function BookPage(){
     const [editError, setEditError] = useState<string | null>(null);
     const [deleteError, setDeleteError] = useState<string | null>(null);
     const params = useParams();
-    const navigate = useNavigate();
     const {isStaff} = useAuth();
 
     useEffect(() => {
@@ -57,8 +56,8 @@ function BookPage(){
     async function handleDelete() {
         setDeleteError(null);
         try {
-            await deleteBook(params.bookId);
-            navigate('/');
+            const updated = await deleteBook(params.bookId);
+            setInfo(updated);
         } catch (error) {
             const message = isAxiosError(error)
                 ? `Delete failed (${error.response?.status ?? 'network error'})`

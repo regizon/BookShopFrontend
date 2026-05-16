@@ -25,7 +25,7 @@ export function deleteBook(id: string | undefined) {
     return instance({
         url: ENDPOINTS.BOOKS.DETAIL(id),
         method: 'delete',
-    })
+    }).then((response) => response.data as BookAllInfo)
 }
 
 export default getDetails
